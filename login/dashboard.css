@@ -63,3 +63,26 @@ body{
     display: flex;
     flex-direction: column;
 }
+
+@media (max-width: 750px){
+    .dashboard{
+        display: block;
+    }
+
+    .fb-cell--1{
+        height: 60%;
+    }
+
+    .fb-cell--2{
+        height: 50%;
+    }
+
+    .fb-cell--3{
+        height: 50%;
+    }
+
+    .fb-cell--4{
+        height: 50%;
+    }
+
+}
