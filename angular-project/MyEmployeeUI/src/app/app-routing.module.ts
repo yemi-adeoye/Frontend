@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'posts', component: PostComponent},
   {path: 'users', component: UsersComponent},
   {path: 'todos', component: TodoComponent},
-  {path: 'comments', component: CommentsComponent},
+  {path: 'comments/:id', component: CommentsComponent},
   {path: 'user', component: UserComponent}
 ];
 
