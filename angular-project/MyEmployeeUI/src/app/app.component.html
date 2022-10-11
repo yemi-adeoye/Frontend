@@ -13,4 +13,26 @@
 <button (click)="calc('mul')">MUL</button>
 <button (click)="calc('div')">DIV</button>
 <br />
-<div>Result is: {{result}}</div>
+<div *ngIf="result">Result is: {{result}}</div>
+<hr><hr>
+<ul >
+  <li *ngFor="let n of nums"> {{n}}</li>
+</ul>
+<button (click)="sortAsc()">Sort-ASC</button>
+<button (click)="sortDesc()">Sort-DESC</button>
+<button (click)="filterEven()">Filter:Even</button>
+<button (click)="filterOdd()">Filter:Odd</button>
+<button (click)="reset()">Reset</button>
+
+<hr><hr>
+<button>Sort by Salary - ASC</button> &nbsp;&nbsp;&nbsp;
+<input type="text" name="city" [(ngModel)]="city" placeholder="Enter city to filter"> &nbsp;&nbsp;
+<button (click)="filterEmployee()">Filter</button>
+<h2>All Employees</h2>
+<div class="employee-item" *ngFor="let e of employees">
+  ID: {{e.id}} <br />
+  Name: {{e.name}} <br />
+  Salary: {{e.salary}} <br />
+  City: {{e.city}} <br />
+</div>
+

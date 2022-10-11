@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+import { Employee } from './models/employee.model';
+import { employees } from './data/data';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,7 +11,42 @@ export class AppComponent {
   y:number=10;
   msg:string; //undefined
   result:number;
+  employee1:Employee;
+  employee2:Employee;
+  employee3:Employee;
+  employees:Employee[];
+  city:string='';
+  tempEmployees:Employee[];
 
+  constructor(){
+    this.employees=employees;
+    this.tempEmployees = employees;
+  }
+
+  nums:number[]=[5,8,2,7,1,6,9,3];
+  tempNums:number[] = [5,8,2,7,1,6,9,3];
+
+  sortAsc(){
+    this.nums = this.nums.sort((a,b)=>a-b);
+  }
+
+  sortDesc(){
+    this.nums = this.nums.sort((a,b)=>b-a);
+  }
+
+  filterEven(){
+    this.reset();
+    this.nums = this.nums.filter(n=>n%2 == 0);
+  }
+
+  filterOdd(){
+    this.reset();
+    this.nums = this.nums.filter(n=>n%2 == 1);
+  }
+
+  reset(){
+    this.nums = this.tempNums;
+  }
   welcomeFunc(){
     this.msg='Hey Welcome to angular';
   }
@@ -29,6 +65,15 @@ export class AppComponent {
         break;
     }
   }
+
+  filterEmployee(){
+    this.employees = this.tempEmployees;
+    if( !(this.city == '' || this.city == undefined) ){
+      this.employees = this.employees
+              .filter(e=>e.city === this.city);
+    }
+  }
+
 }
 
 /*
