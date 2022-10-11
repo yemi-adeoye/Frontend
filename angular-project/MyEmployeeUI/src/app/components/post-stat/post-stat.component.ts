@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-post-stat',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostStatComponent implements OnInit {
 
-  constructor() { }
+  totalPosts: number;
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
+    this.postService.getAllPosts().subscribe(data=>{
+      this.totalPosts = data.length;
+    });
   }
 
 }

@@ -13,6 +13,12 @@ import { PostStatComponent } from './components/post-stat/post-stat.component';
 import { UserStatComponent } from './components/user-stat/user-stat.component';
 import { TodoStatComponent } from './components/todo-stat/todo-stat.component';
 import { HttpClientModule} from '@angular/common/http';
+import { TodoComponent } from './components/todo/todo.component';
+import { UsersComponent } from './components/users/users.component';
+import { HomeComponent } from './components/home/home.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { UserComponent } from './components/user/user.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +29,13 @@ import { HttpClientModule} from '@angular/common/http';
     PostComponent,
     PostStatComponent,
     UserStatComponent,
-    TodoStatComponent
+    TodoStatComponent,
+    TodoComponent,
+    UsersComponent,
+    HomeComponent,
+    CommentsComponent,
+    UserComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
