@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-stat',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserStatComponent implements OnInit {
 
-  constructor() { }
+  numUsers: number = 0;
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+
+    this.userService.user$.subscribe(data=>{
+      this.numUsers = data.length;
+    });
+    // this.userService.getAllUsers().subscribe(data=>{
+    //   this.numUsers = data.length;
+    // }
+    //)
   }
 
 }

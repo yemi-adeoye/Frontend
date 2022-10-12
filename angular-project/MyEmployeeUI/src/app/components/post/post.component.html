@@ -1,6 +1,6 @@
 <div *ngFor="let post of posts" class="post-item">
   ID: {{post.id}} -- {{post.title}} <br>
-  Posted By User ID: {{post.userId}} <a routerLink="/user">Show Details</a>
+  Posted By User ID: {{post.userId}} <a routerLink="/user/{{post.userId}}">Show Details</a>
   <br />
   <a routerLink="/post/one">Show Detailed Post</a> | <a routerLink="/comments/{{post.id}}">Show Comments</a>
   <br/>

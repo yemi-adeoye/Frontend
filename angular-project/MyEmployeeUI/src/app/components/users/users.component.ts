@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserInfo } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-users',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-  constructor() { }
+  users: UserInfo[];
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.getAllUsers().subscribe(data=>{
+      this.users=data;
+      //update the subject
+      this.userService.user$.next(data);
+    });
   }
 
+  deleteUser(userId: number){
+      this.users = this.users.filter(u=>u.id !== userId);
+      this.userService.user$.next(this.users);
+  }
 }

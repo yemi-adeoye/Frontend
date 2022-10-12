@@ -1,4 +1,4 @@
-export class Comment{
+export class Comments{
   postId: number;
   id: number;
   name: string;

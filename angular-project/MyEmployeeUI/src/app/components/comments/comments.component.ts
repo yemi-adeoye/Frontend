@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Comments } from 'src/app/models/comments.model';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-comments',
@@ -8,11 +10,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CommentsComponent implements OnInit {
   postId:number;
-  constructor(private actRoute: ActivatedRoute) { }
+  comments: Comments[];
+  constructor(private actRoute: ActivatedRoute,
+    private postService: PostService) { }
 
   ngOnInit(): void {
     this.postId = this.actRoute.snapshot.params['id'];
-    console.log(this.postId);
+    this.postService.getCommentsByPostId(this.postId)
+      .subscribe(data=>{
+          this.comments = data;
+      });
   }
 
 }

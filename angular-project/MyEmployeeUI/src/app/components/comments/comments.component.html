@@ -1,1 +1,8 @@
-<p>comments works!</p>
+<h2>Comments</h2>
+<div *ngFor="let comment of comments">
+    Name: {{comment.name}} <br />
+    Email: {{comment.email}} <br />
+    {{comment.body}}
+
+    <hr>
+</div>
