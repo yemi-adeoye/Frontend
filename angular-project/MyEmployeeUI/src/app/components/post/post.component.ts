@@ -16,8 +16,16 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe(data=>{
         this.posts = data;
-
+        this.postService.post$.next(this.posts);
     });
   }
+
+  deletePost(postId){
+    this.postService.deletePost(postId).subscribe(data=>{
+        this.posts = this.posts.filter(p=>p.id !== postId);
+        this.postService.post$.next(this.posts);
+    });
+  }
+
 
 }

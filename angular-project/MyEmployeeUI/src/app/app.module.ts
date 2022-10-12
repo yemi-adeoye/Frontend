@@ -19,6 +19,7 @@ import { HomeComponent } from './components/home/home.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { UserComponent } from './components/user/user.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { PostAddComponent } from './components/post-add/post-add.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     HomeComponent,
     CommentsComponent,
     UserComponent,
-    NavbarComponent
+    NavbarComponent,
+    PostAddComponent
   ],
   imports: [
     BrowserModule,

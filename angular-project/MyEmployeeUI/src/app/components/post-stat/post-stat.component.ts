@@ -12,9 +12,12 @@ export class PostStatComponent implements OnInit {
   constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    this.postService.getAllPosts().subscribe(data=>{
+    this.postService.post$.subscribe(data=>{
       this.totalPosts = data.length;
     });
+    // this.postService.getAllPosts().subscribe(data=>{
+    //   this.totalPosts = data.length;
+    // });
   }
 
 }
