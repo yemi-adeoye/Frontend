@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommentsComponent } from './components/comments/comments.component';
 import { HomeComponent } from './components/home/home.component';
 import { PostAddComponent } from './components/post-add/post-add.component';
+import { PostEditComponent } from './components/post-edit/post-edit.component';
 import { PostComponent } from './components/post/post.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { UserComponent } from './components/user/user.component';
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'todos', component: TodoComponent},
   {path: 'comments/:id', component: CommentsComponent},
   {path: 'user/:id', component: UserComponent},
-  { path: 'post/add', component: PostAddComponent}
+  { path: 'post/add', component: PostAddComponent},
+  {path: 'post/edit/:id' , component: PostEditComponent}
 ];
 
 @NgModule({

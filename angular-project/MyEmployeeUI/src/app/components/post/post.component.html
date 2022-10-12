@@ -8,5 +8,6 @@
   <a routerLink="/post/one">Show Detailed Post</a> | <a routerLink="/comments/{{post.id}}">Show Comments</a>
   <br/>
   <button (click)="deletePost(post.id)">Delete Post</button>
+  <button routerLink="/post/edit/{{post.id}}">Edit Post</button>
   <br />
 </div>

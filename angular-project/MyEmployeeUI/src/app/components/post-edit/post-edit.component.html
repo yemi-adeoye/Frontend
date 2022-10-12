@@ -1,0 +1,25 @@
+<h1>Edit Post</h1>
+{{msg}} <br />
+<form (submit)="onFormSubmit()" [formGroup]="postForm" >
+  <label>Title: </label>
+  <input type="text" name="title" formControlName="title">
+  <span *ngIf="postForm.controls['title'].invalid && postForm.controls['title'].touched">
+    <small *ngIf="postForm.controls['title'].errors['required']">Title is required</small>
+    <small *ngIf="postForm.controls['title'].errors['pattern']">Only special chars [_ and -] are allowed</small>
+  </span>
+  <br /><br />
+  <textarea rows="10" cols="50" formControlName="body"></textarea>
+  <span *ngIf="postForm.controls['body'].invalid && postForm.controls['body'].touched">
+    <small *ngIf="postForm.controls['body'].errors['required']">body is required</small>
+   </span>
+  <br /><br />
+  <label>User ID: </label>
+  <input type="text" name="userId" formControlName="userId">
+  <span *ngIf="postForm.controls['userId'].invalid && postForm.controls['userId'].touched">
+    <small *ngIf="postForm.controls['userId'].errors['required']">userId is required</small>
+    <small *ngIf="postForm.controls['userId'].errors['pattern']">[0-9] are allowed</small>
+  </span>
+  <br /><br />
+  <input type="submit" value="Edit Post" [disabled]="!postForm.valid">
+
+</form>

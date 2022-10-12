@@ -29,4 +29,11 @@ export class PostService {
      return this.http.post<Post>('https://jsonplaceholder.typicode.com/posts', post);
   }
 
+  getPostById(postId: number):Observable<Post> {
+     return this.http.get<Post>('https://jsonplaceholder.typicode.com/posts/'+postId);
+  }
+
+  editPost(post: Post) : Observable<Post>{
+     return this.http.put<Post>('https://jsonplaceholder.typicode.com/posts/'+post.id,post );
+  }
 }

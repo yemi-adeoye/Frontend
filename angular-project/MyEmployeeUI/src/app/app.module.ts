@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +20,7 @@ import { CommentsComponent } from './components/comments/comments.component';
 import { UserComponent } from './components/user/user.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PostAddComponent } from './components/post-add/post-add.component';
+import { PostEditComponent } from './components/post-edit/post-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,13 +38,15 @@ import { PostAddComponent } from './components/post-add/post-add.component';
     CommentsComponent,
     UserComponent,
     NavbarComponent,
-    PostAddComponent
+    PostAddComponent,
+    PostEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
