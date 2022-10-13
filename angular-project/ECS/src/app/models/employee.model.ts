@@ -6,4 +6,6 @@ export class Employee{
   managerName?: string;
   email: string;
   password?: string;
+  imageUrl?:string;
+  role?:string;
 }

@@ -30,9 +30,6 @@ export class SignUpComponent implements OnInit {
   }
 
   onFormSubmit(){
-
-    console.log(this.signUpForm.value);
-
      /* 1. Check if Password Match */
     if(! (this.signUpForm.value.password === this.signUpForm.value.repassword)) {
         this.msg = 'Passwords do not Match';

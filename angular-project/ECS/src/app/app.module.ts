@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { ManagerComponent } from './components/manager/manager.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     SignUpComponent,
     HomeComponent,
     EmployeeComponent,
-    ManagerComponent
+    ManagerComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

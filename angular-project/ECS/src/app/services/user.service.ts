@@ -28,7 +28,7 @@ export class UserService {
       email: 'harry@gmail.com',
       jobTitle: 'Developer',
       managerName: 'Albus Dumbledore',
-      role: 'EMPLOYEE'
+      role: 'MANAGER'
     }
      return Observable.create(observer=>{
         observer.next(user);
