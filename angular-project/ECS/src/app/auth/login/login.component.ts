@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/home');
         },
       error: (error)=>{
-          this.msg='Invalid Credentials';
+        console.log(error);
+          this.msg = error.error.msg;
       }
      });
   }

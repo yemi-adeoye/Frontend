@@ -4,23 +4,16 @@ import { Observable } from 'rxjs';
 import { Employee } from '../models/employee.model';
 import { Login } from '../models/login.model';
 import { UserInfo } from '../models/user.model';
-
+import {environment} from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor( ) { }
+  constructor(private http: HttpClient) { }
 
-  login(login: Login) : Observable<string>{
-    let token = btoa(login.email + ':' + login.password);
-    return Observable.create(observer=>{
-      observer.next(token);
-      observer.complete();
-    });
-    /*
-      call get API for login
-    */
+  public login(login: Login):Observable<string>{
+    return this.http.post<string>(environment.serverUrl + '/auth/login',login );
   }
 
   getUser(token: string) : Observable<UserInfo>{
