@@ -13,16 +13,22 @@ import { managers} from '../../data/data';
 export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   jobTitles: string[] = ['Developer', 'Product Owner', 'Scrum Master','DevOps Engineer','Tester'];
-  managers: Manager[] = managers;
- employee: Employee;
+  managers: Manager[];
+  employee: Employee;
   msg: string ='';
+
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
+    this.userService.getAllManagers().subscribe({
+      next: (data)=>{ this.managers = data; },
+      error:(error)=>{ this.msg = error.error.msg; }
+    });
+
     this.signUpForm = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]),
         jobTitle: new FormControl('', Validators.required),
-        manager: new FormControl('', Validators.required),
+        managerEmail: new FormControl('', Validators.required),
         email: new FormControl('', [Validators.required,Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]),
         password: new FormControl('',[Validators.required,Validators.minLength(5),Validators.pattern(/^[a-zA-Z0-9 _#]+$/)]),
         repassword: new FormControl('',Validators.required)
@@ -41,15 +47,16 @@ export class SignUpComponent implements OnInit {
       jobTitle: this.signUpForm.value.jobTitle,
       email: this.signUpForm.value.email,
       password: this.signUpForm.value.password,
-      managerId: this.signUpForm.value.manager
+      managerEmail: this.signUpForm.value.managerEmail
      };
 
      this.userService.signUp(this.employee).subscribe({
       next: (data)=>{
+          this.userService.msg$.next('SignUp Success');
           this.router.navigateByUrl('/');
       },
       error: (error)=>{
-        this.msg='Sign Up not possible at this time';
+        this.msg=error.error.msg;
       }
      });
   }

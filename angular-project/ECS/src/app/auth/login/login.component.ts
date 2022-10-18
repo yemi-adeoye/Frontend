@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   login: Login;
   msg: string;
-  constructor(private loginService: UserService, private router:Router) { }
+  constructor(private userService: UserService, private router:Router) { }
 
   ngOnInit(): void {
     /* read the token from ls
@@ -21,6 +21,10 @@ export class LoginComponent implements OnInit {
     this.loginForm=new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
+    });
+
+    this.userService.msg$.subscribe(val=>{
+      this.msg = val;
     });
   }
 
@@ -31,13 +35,12 @@ export class LoginComponent implements OnInit {
      };
 
      /* Call login API */
-     this.loginService.login(this.login).subscribe({
+     this.userService.login(this.login).subscribe({
       next: (data)=>{
           localStorage.setItem('token',data);
           this.router.navigateByUrl('/home');
         },
       error: (error)=>{
-        console.log(error);
           this.msg = error.error.msg;
       }
      });

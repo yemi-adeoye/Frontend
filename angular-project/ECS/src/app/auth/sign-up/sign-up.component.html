@@ -28,8 +28,8 @@
 
     <div class="form-group">
       <label>Manager: </label>
-      <select class="form-input" formControlName="manager">
-        <option *ngFor="let m of managers" value="{{m.id}}">{{m.name}}</option>
+      <select class="form-input" formControlName="managerEmail">
+        <option *ngFor="let m of managers" value="{{m.email}}">{{m.name}}</option>
       </select>
     </div>
     <span *ngIf="signUpForm.controls['jobTitle'].invalid && signUpForm.controls['jobTitle'].touched">
