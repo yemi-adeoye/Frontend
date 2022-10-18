@@ -4,6 +4,7 @@ const app = express();
 const func = require('./functions'); 
 const fetch = require('node-fetch');
 const { dbConnect } = require('./config/db');
+const cors = require('cors');
 //app represents express for us. 
 
 const PORT = process.env.PORT | 5000; 
@@ -11,6 +12,7 @@ const PORT = process.env.PORT | 5000;
 /* connect to mongoDB */
 dbConnect();
 
+app.use(express.json());
 /* Sinple get api */
 app.get('/', (req,res)=>{
     res.send({ 'value': func.add(5,6) }); 
@@ -40,17 +42,15 @@ app.get('/users/async', async (req,res)=>{
         res.send(400, {'error_msg': err.msg});
     }
 });
-
-//API Middleware
-app.use(express.json({
-    extended: false
-}));  
-
+ 
+app.use(cors());
 
 app.use('/api/employee', require('./routes/api/employee'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/user', require('./routes/api/user'));
 app.use('/api/manager', require('./routes/api/manager'));
+app.use('/api/leave', require('./routes/api/leave'));
+app.use('/api/ticket', require('./routes/api/ticket'));
 
 app.listen(PORT, ()=>{
     console.log('server started at port 5000')
