@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/employee.model';
@@ -9,7 +10,7 @@ import { UserInfo } from '../models/user.model';
 })
 export class UserService {
 
-  constructor() { }
+  constructor( ) { }
 
   login(login: Login) : Observable<string>{
     let token = btoa(login.email + ':' + login.password);
