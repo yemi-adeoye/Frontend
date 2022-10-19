@@ -1,0 +1,47 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { priority } from 'src/app/data/data';
+import { Ticket } from 'src/app/models/ticket.model';
+import { EmployeeService } from 'src/app/services/employee.service';
+
+@Component({
+  selector: 'app-employee-ticket',
+  templateUrl: './ticket.component.html',
+  styleUrls: ['./ticket.component.css']
+})
+export class TicketComponent implements OnInit {
+
+  @Input("email")
+  email: string;
+
+  ticketForm: FormGroup;
+  msg: string = '';
+  ticket: Ticket;
+  priority: string[]= priority;
+  constructor(private employeeService: EmployeeService) { }
+
+  ngOnInit(): void {
+    this.ticketForm = new FormGroup({
+      issue : new FormControl('', Validators.required),
+      priority: new FormControl('', Validators.required)
+    });
+  }
+
+  onIssueSubmit(){
+    this.ticket={
+      issue: this.ticketForm.value.issue,
+      priority:this.ticketForm.value.priority,
+      email: this.email
+    };
+
+    this.employeeService.postTicket(this.ticket).subscribe({
+      next: (data)=>{
+        this.ticket = data;
+        this.msg='Ticket successfully posted.';
+      },
+      error: (error)=>{
+        this.msg=error.error.msg;
+      }
+    });
+  }
+}

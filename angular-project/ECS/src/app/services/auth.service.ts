@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  status$ = new BehaviorSubject<boolean>(false);
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -17,13 +20,10 @@ export class AuthService {
          this.router.navigateByUrl('/');
     if(token){
       /* 2. Is the token valid at this instance? */
-      this.userService.getUser(token).subscribe({
+      this.status$.subscribe({
         next: (data)=>{
-            status = true;
-        },
-        error: (err)=>{
-          //token invalid or expired 401
-          status=false;
+            status = data;
+            return status;
         }
       });
     }

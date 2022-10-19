@@ -15,7 +15,7 @@ import { priority } from '../../data/data'
 export class EmployeeComponent implements OnInit {
 
   employee: Employee;
-  ticketForm: FormGroup;
+
   priority: string[]= priority;
   msg: string = '';
   ticket: Ticket;
@@ -28,10 +28,6 @@ export class EmployeeComponent implements OnInit {
     private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
-    this.ticketForm = new FormGroup({
-      issue : new FormControl('', Validators.required),
-      priority: new FormControl('', Validators.required)
-    });
 
     this.leaveForm = new FormGroup({
       from : new FormControl('', Validators.required),
@@ -68,24 +64,7 @@ export class EmployeeComponent implements OnInit {
     });
   }
 
-  onIssueSubmit(){
-    this.ticket={
-      issue: this.ticketForm.value.issue,
-      priority:this.ticketForm.value.priority,
-      email: this.ticketForm.value.email
-    };
 
-    this.employeeService.postTicket(this.ticket).subscribe({
-      next: (data)=>{
-        this.ticket = data;
-        this.msg='Ticket successfully posted.';
-        console.log(this.ticket);
-      },
-      error: (err)=>{
-        this.msg='Could not register you ticket, please try later.';
-      }
-    });
-  }
 
   onApplyLeave(){
       this.leave = {

@@ -13,16 +13,19 @@ export class HomeComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.getUser(localStorage.getItem('token'))
-    .subscribe({
+    this.userService.getUser(localStorage.getItem('token')).subscribe({
       next: (data)=>{
+        console.log('data-> ' + data);
         this.user = data;
-        if(this.user.role == 'EMPLOYEE')
+        if(this.user.role === 'EMPLOYEE'){
+              console.log('In employee if--> ' + this.user);
               this.router.navigateByUrl('/employee');
+        }
          else
               this.router.navigateByUrl('/manager');
       },
       error: (error)=>{
+          this.userService.msg$.next(error.error.msg);
           this.router.navigateByUrl('/');
       }
     });

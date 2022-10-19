@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   login: Login;
   msg: string;
-  constructor(private userService: UserService, private router:Router) { }
+  constructor(private userService: UserService, private router:Router,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     /* read the token from ls
@@ -38,6 +40,8 @@ export class LoginComponent implements OnInit {
      this.userService.login(this.login).subscribe({
       next: (data)=>{
           localStorage.setItem('token',data);
+          /* Update the subject(status$): true  */
+          this.authService.status$.next(true);
           this.router.navigateByUrl('/home');
         },
       error: (error)=>{

@@ -1,4 +1,5 @@
 export class UserInfo{
+  _id?:string;
   email: string;
   name: string;
   jobTitle: string;

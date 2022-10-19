@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Leave } from '../models/leave.model';
 import { Ticket } from '../models/ticket.model';
 import {leaves} from '../data/data'
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,14 +12,11 @@ export class EmployeeService {
 
   leave$ = new BehaviorSubject<Leave[]>([]);
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  postTicket(ticket: Ticket) : Observable<Ticket>{
-    return Observable.create(observer=>{
-      ticket.id=1234;
-      observer.next(ticket);
-      observer.complete();
-   });
+  public postTicket(ticket: Ticket) : Observable<Ticket>{
+      const header = {'x-auth-token' : localStorage.getItem('token')}
+      return this.http.post<Ticket>(environment.serverUrl + '/ticket/add' , ticket, {headers: header});
   }
 
   applyLeave(leave: Leave) : Observable<Leave> {

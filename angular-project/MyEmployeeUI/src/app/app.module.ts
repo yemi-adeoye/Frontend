@@ -21,6 +21,8 @@ import { UserComponent } from './components/user/user.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PostAddComponent } from './components/post-add/post-add.component';
 import { PostEditComponent } from './components/post-edit/post-edit.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,9 @@ import { PostEditComponent } from './components/post-edit/post-edit.component';
     UserComponent,
     NavbarComponent,
     PostAddComponent,
-    PostEditComponent
+    PostEditComponent,
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

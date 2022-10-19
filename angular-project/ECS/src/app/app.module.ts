@@ -11,6 +11,10 @@ import { ManagerComponent } from './components/manager/manager.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { InfoComponent } from './components/employee/info/info.component';
+import { TicketComponent } from './components/employee/ticket/ticket.component';
+import { LeaveComponent } from './components/employee/leave/leave.component';
+import { ListComponent } from './components/employee/list/list.component';
  @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +23,11 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     EmployeeComponent,
     ManagerComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    InfoComponent,
+    TicketComponent,
+    LeaveComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,

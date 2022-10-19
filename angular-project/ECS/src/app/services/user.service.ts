@@ -19,18 +19,9 @@ export class UserService {
     return this.http.post<string>(environment.serverUrl + '/auth/login',login );
   }
 
-  getUser(token: string) : Observable<UserInfo>{
-    let user: UserInfo={
-      name: 'harry potter',
-      email: 'harry@gmail.com',
-      jobTitle: 'Developer',
-      managerName: 'Albus Dumbledore',
-      role: 'MANAGER'
-    }
-     return Observable.create(observer=>{
-        observer.next(user);
-        observer.complete();
-     });
+  public getUser(token: string) : Observable<UserInfo>{
+      const header = {'x-auth-token': token}
+      return this.http.get<UserInfo>(environment.serverUrl + '/auth/user',{headers: header});
   }
 
   public signUp(employee: Employee) :Observable<any>{
