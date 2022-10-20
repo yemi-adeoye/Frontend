@@ -16,8 +16,7 @@ export class AuthService {
     /* 1. Is the token available in local storage */
     let token = localStorage.getItem('token');
     let status = false;
-    if(!token)
-         this.router.navigateByUrl('/');
+
     if(token){
       /* 2. Is the token valid at this instance? */
       this.status$.subscribe({

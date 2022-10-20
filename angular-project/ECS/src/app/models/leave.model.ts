@@ -1,9 +1,10 @@
 export class Leave{
-  id?: number | string;
-  to: string | Date;
-  from: string | Date;
+  _id?: number | string;
+  to?: string ;
+  from?: string ;
   email?: string;
   year?: number | string;
-  numDays: number;
+  days?: number;
   status?: string;
+  comments? : string
 }

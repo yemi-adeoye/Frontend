@@ -6,4 +6,6 @@ export class UserInfo{
   managerName: string;
   imageUrl?: string;
   role: string;
+  leavesLeft? : number;
+  totalLeaves? : number;
 }

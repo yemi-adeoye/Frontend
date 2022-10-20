@@ -8,5 +8,7 @@ export class Employee{
   password?: string;
   imageUrl?:string;
   role?:string;
-  managerId?: string
+  managerId?: string;
+  leavesLeft? : number;
+  totalLeaves? : number;
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Employee } from 'src/app/models/employee.model';
 import { Manager } from 'src/app/models/manager.model';
 import { UserService } from 'src/app/services/user.service';
@@ -10,13 +11,13 @@ import { managers} from '../../data/data';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit,OnDestroy {
   signUpForm: FormGroup;
   jobTitles: string[] = ['Developer', 'Product Owner', 'Scrum Master','DevOps Engineer','Tester'];
   managers: Manager[];
   employee: Employee;
   msg: string ='';
-
+  subscription: Subscription;
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
@@ -50,15 +51,17 @@ export class SignUpComponent implements OnInit {
       managerEmail: this.signUpForm.value.managerEmail
      };
 
-     this.userService.signUp(this.employee).subscribe({
+     this.subscription = this.userService.signUp(this.employee).subscribe({
       next: (data)=>{
           this.userService.msg$.next('SignUp Success');
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/login');
       },
       error: (error)=>{
         this.msg=error.error.msg;
       }
      });
   }
-
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+ }
 }

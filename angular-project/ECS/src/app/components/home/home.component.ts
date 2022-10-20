@@ -15,10 +15,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUser(localStorage.getItem('token')).subscribe({
       next: (data)=>{
-        console.log('data-> ' + data);
         this.user = data;
         if(this.user.role === 'EMPLOYEE'){
-              console.log('In employee if--> ' + this.user);
               this.router.navigateByUrl('/employee');
         }
          else
@@ -26,7 +24,7 @@ export class HomeComponent implements OnInit {
       },
       error: (error)=>{
           this.userService.msg$.next(error.error.msg);
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/login');
       }
     });
 

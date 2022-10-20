@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { priority } from 'src/app/data/data';
 import { Ticket } from 'src/app/models/ticket.model';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -9,15 +10,13 @@ import { EmployeeService } from 'src/app/services/employee.service';
   templateUrl: './ticket.component.html',
   styleUrls: ['./ticket.component.css']
 })
-export class TicketComponent implements OnInit {
-
-  @Input("email")
-  email: string;
+export class TicketComponent implements OnInit,OnDestroy {
 
   ticketForm: FormGroup;
   msg: string = '';
   ticket: Ticket;
   priority: string[]= priority;
+  subscription: Subscription;
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
@@ -30,18 +29,23 @@ export class TicketComponent implements OnInit {
   onIssueSubmit(){
     this.ticket={
       issue: this.ticketForm.value.issue,
-      priority:this.ticketForm.value.priority,
-      email: this.email
+      priority:this.ticketForm.value.priority
+
     };
 
     this.employeeService.postTicket(this.ticket).subscribe({
       next: (data)=>{
         this.ticket = data;
         this.msg='Ticket successfully posted.';
+        this.employeeService.ticketCreated$.next(this.ticket);
       },
       error: (error)=>{
         this.msg=error.error.msg;
       }
     });
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+ }
 }

@@ -11,41 +11,18 @@
                     <div class="fb-cell fb-cell--2">
                         <div class="fb-item">
                             <!-- Ticket component goes here -->
-                            <app-employee-ticket [email]="employee.email"></app-employee-ticket>
+                            <app-employee-ticket  ></app-employee-ticket>
                         </div>
                     </div>
                     <div class="fb-cell fb-cell--3">
                         <div class="fb-item">
-                            <div class="ticket-form">
-                                <div class="form-header">
-                                    <h2>Apply Leave</h2>
-                                </div>
-                                <div>
-                                    <form [formGroup]="leaveForm" (submit)="onApplyLeave()">
-                                        <label>From Date: </label>
-                                        <input type="date" name="from" formControlName="from">
-                                        <br /><br />
-                                        <label>To Date: </label>
-                                        <input type="date" name="to" formControlName="to">
-                                        <br /><br />
-                                        <label>Number of Days: </label>
-                                        <input type="text" formControlName="numDays">
-                                        <br /><br />
-                                        <input type="submit" value="Apply Leave" [disabled]="!leaveForm.valid">
-                                    </form>
-                                </div>
-
-                            </div>
+                              <!-- apply leave component goes here -->
+                              <app-employee-leave  ></app-employee-leave>
                         </div>
                     </div>
                     <div class="fb-cell fb-cell--4">
                         <div class="fb-item">
-                          <ul>
-                            <li *ngFor="let leave of leaveArry">
-                              {{leave.from}} -- {{leave.to}} : {{leave.numDays}} days
-                              <span *ngIf="leave.status == 'PENDING'"> : {{leave.status}}</span>
-                            </li>
-                          </ul>
+                              <app-employee-list [tickets]="tickets" [leaves]="leaveArry" (status)="onStatusUpdate($event)"></app-employee-list>
                         </div>
                     </div>
             </div>

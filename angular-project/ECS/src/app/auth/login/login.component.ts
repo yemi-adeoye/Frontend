@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Login } from 'src/app/models/login.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -10,10 +11,12 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
   loginForm: FormGroup;
   login: Login;
   msg: string;
+  subscription: Subscription[]=[];
+
   constructor(private userService: UserService, private router:Router,
     private authService: AuthService) { }
 
@@ -25,9 +28,9 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required)
     });
 
-    this.userService.msg$.subscribe(val=>{
+    this.subscription.push(this.userService.msg$.subscribe(val=>{
       this.msg = val;
-    });
+    }));
   }
 
   onFormSubmit(){
@@ -37,6 +40,7 @@ export class LoginComponent implements OnInit {
      };
 
      /* Call login API */
+     this.subscription.push(
      this.userService.login(this.login).subscribe({
       next: (data)=>{
           localStorage.setItem('token',data);
@@ -47,13 +51,10 @@ export class LoginComponent implements OnInit {
       error: (error)=>{
           this.msg = error.error.msg;
       }
-     });
+     }));
+  }
+  ngOnDestroy(): void {
+     this.subscription.forEach(s=>s.unsubscribe());
   }
 }
-/*
-data=>{
-  localStorage.setItem('token',data);
-  this.router.navigateByUrl('/home');
-}
 
-*/

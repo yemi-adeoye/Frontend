@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+ import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Employee } from 'src/app/models/employee.model';
 import { Leave } from 'src/app/models/leave.model';
 import { Ticket } from 'src/app/models/ticket.model';
@@ -12,29 +12,24 @@ import { priority } from '../../data/data'
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
 })
-export class EmployeeComponent implements OnInit {
+export class EmployeeComponent implements OnInit,OnDestroy {
 
   employee: Employee;
 
   priority: string[]= priority;
   msg: string = '';
   ticket: Ticket;
-  leaveForm: FormGroup;
+  tickets: Ticket[]=[];
   leave: Leave;
   leaveMsg: string='';
   leaveArry: Leave[];
   leaveErrorMsg:string='';
+  subscription: Subscription[]=[];
+
   constructor(private userService: UserService,private router: Router,
     private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
-
-    this.leaveForm = new FormGroup({
-      from : new FormControl('', Validators.required),
-      to: new FormControl('', Validators.required),
-      numDays: new FormControl('', Validators.required)
-    });
-
     this.userService.getUser(localStorage.getItem('token')).subscribe({
       next: (data)=>{
           this.employee={
@@ -43,48 +38,50 @@ export class EmployeeComponent implements OnInit {
             jobTitle: data.jobTitle,
             imageUrl: data.imageUrl,
             managerName: data.managerName,
-            role: data.role
+            role: data.role,
+            leavesLeft: data.leavesLeft,
+            totalLeaves: data.totalLeaves
           };
 
           if( !(this.employee.role == 'EMPLOYEE') )
-                  this.router.navigateByUrl('/');
+                  this.router.navigateByUrl('/login');
       },
-      error: (err)=>{
-        this.router.navigateByUrl("/");
+      error: (error)=>{
+        this.userService.msg$.next(error.error.msg);
+        this.router.navigateByUrl("/login");
       }
     });
-
-    this.employeeService.getAllLeaves(new Date().getFullYear()).subscribe({
+    this.subscription.push(
+    this.employeeService.getAllLeaves('PENDING').subscribe({
       next: (data)=>{
         this.leaveArry = data;
       },
       error: (err)=>{
-          this.leaveErrorMsg='COuld not load leave records at this moment';
+
       }
-    });
+    }));
+    this.subscription.push(
+    this.employeeService.fetchTickets('OPEN').subscribe({
+      next: (data)=>{
+          this.tickets = data;
+      },
+      error: (error)=>{}
+    }));
   }
 
-
-
-  onApplyLeave(){
-      this.leave = {
-        to: this.leaveForm.value.to,
-        from: this.leaveForm.value.from,
-        email: this.employee.email,
-        year: new Date().getFullYear(),
-        numDays: this.leaveForm.value.numDays,
-        status: 'PENDING'
-      };
-
-      this.employeeService.applyLeave(this.leave).subscribe({
+  onStatusUpdate($event: any){
+      let id = $event;
+      this.subscription.push(
+      this.employeeService.updateTicketStatus(id,'CLOSED').subscribe({
         next: (data)=>{
-          this.leave = data;
-          this.leaveMsg='Leave applied successfully';
-          this.leaveArry.push(this.leave);
+            this.tickets = this.tickets.filter(t=> t._id !== id);
         },
-        error: (err)=>{
-          this.leaveMsg='Could not apply leave, please try later'
-        }
-      });
+        error: (error)=>{}
+      }));
   }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach(s=> s.unsubscribe());
+ }
+
 }
