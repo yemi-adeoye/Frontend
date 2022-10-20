@@ -11,7 +11,14 @@
           <span>Email: {{manager?.email}}</span>
 
           <hr>
-          <h3>Employee List </h3>
+          <h4>Employee List </h4>
+          <ol>
+              <li *ngFor="let e of employees">
+                {{e.name}} , {{e.jobTitle}}
+              </li>
+          </ol>
 
+          <hr>
+          <button (click)="onLogout()">Logout</button>
   </div>
 </div>

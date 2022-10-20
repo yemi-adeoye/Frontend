@@ -18,7 +18,9 @@ export class LoginComponent implements OnInit,OnDestroy {
   subscription: Subscription[]=[];
 
   constructor(private userService: UserService, private router:Router,
-    private authService: AuthService) { }
+    private authService: AuthService) {
+
+     }
 
   ngOnInit(): void {
     /* read the token from ls

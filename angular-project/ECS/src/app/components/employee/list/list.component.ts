@@ -28,11 +28,13 @@ export class ListComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
       this.subscription.push(
       this.employeeService.leaveApplied$.subscribe(data=>{
-              this.leaves.push(data);
+            if(this.leaves)
+                  this.leaves.push(data);
       }));
       this.subscription.push(
       this.employeeService.ticketCreated$.subscribe(data=>{
-        this.tickets.push(data);
+          if(this.tickets)
+              this.tickets.push(data);
       }));
   }
 

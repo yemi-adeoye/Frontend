@@ -15,6 +15,7 @@ export class ManagerComponent implements OnInit {
   manager: UserInfo;
   employeeNoAccess: Employee[]=[];
   leaves: Leave[]=[];
+  employees: Employee[];
   constructor(private managerService: ManagerService, private userService: UserService,
     private router:Router) { }
 
@@ -49,6 +50,10 @@ export class ManagerComponent implements OnInit {
         error: ()=>{}
       });
 
+      this.managerService.getAllEmployees(localStorage.getItem('token'))
+      .subscribe({
+        next: (data)=>{this.employees = data}
+      });
   }
 
   /* Call API and grant access */

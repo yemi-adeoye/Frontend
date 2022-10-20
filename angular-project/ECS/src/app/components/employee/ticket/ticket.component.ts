@@ -33,7 +33,7 @@ export class TicketComponent implements OnInit,OnDestroy {
 
     };
 
-    this.employeeService.postTicket(this.ticket).subscribe({
+    this.subscription = this.employeeService.postTicket(this.ticket).subscribe({
       next: (data)=>{
         this.ticket = data;
         this.msg='Ticket successfully posted.';
@@ -46,6 +46,7 @@ export class TicketComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription)
+        this.subscription.unsubscribe();
  }
 }
