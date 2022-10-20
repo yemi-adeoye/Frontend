@@ -15,6 +15,10 @@ import { InfoComponent } from './components/employee/info/info.component';
 import { TicketComponent } from './components/employee/ticket/ticket.component';
 import { LeaveComponent } from './components/employee/leave/leave.component';
 import { ListComponent } from './components/employee/list/list.component';
+import {  ManagerAccessComponent } from './components/manager/access/access.component';
+import { ManagerLeavesComponent } from './components/manager/leaves/leaves.component';
+import { ManagerInfoComponent } from './components/manager/info/info.component';
+import { ManagerTicketComponent } from './components/manager/ticket/ticket.component';
  @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +31,11 @@ import { ListComponent } from './components/employee/list/list.component';
     InfoComponent,
     TicketComponent,
     LeaveComponent,
-    ListComponent
+    ListComponent,
+    ManagerAccessComponent,
+    ManagerLeavesComponent,
+    ManagerInfoComponent,
+    ManagerTicketComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,12 @@
 export class Leave{
-  _id?: number | string;
+  _id?:  string;
   to?: string ;
   from?: string ;
   email?: string;
-  year?: number | string;
+  year?:  string;
   days?: number;
   status?: string;
-  comments? : string
+  comments? : string;
+  leavesLeft?: number;
+  name?: string;
 }

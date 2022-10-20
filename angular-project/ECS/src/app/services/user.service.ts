@@ -31,4 +31,6 @@ export class UserService {
   public getAllManagers():Observable<Manager[]> {
     return this.http.get<Manager[]>(environment.serverUrl +'/manager/all');
   }
+
+
 }

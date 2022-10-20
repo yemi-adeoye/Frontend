@@ -28,31 +28,5 @@ export const priority:string[]=[
 
 
 export const leaves: Leave[]=[
-  {
-    "_id":   1,
-    "to":  '2022-03-16',
-  "from":  '2022-03-18',
-  "email":  'harry@gmail.com',
-  "days": 3,
-  "year":  2022,
-  "status": 'CONFIRMED'
-  },
-  {
-    "_id":   2,
-    "to":  '2022-05-10',
-  "from":  '2022-05-17',
-  "email":  'harry@gmail.com',
-  "year":  2022,
-  "days":  5,
-  "status": 'CONFIRMED'
-  },
-  {
-    "_id":   3,
-    "to":  '2022-09-2',
-  "from":  '2022-09-6',
-  "email":  'harry@gmail.com',
-  "year":  2022,
-  "days":  5,
-  "status": 'CONFIRMED'
-  }
+
 ];
