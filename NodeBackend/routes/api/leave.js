@@ -5,8 +5,26 @@ const Leave = require('../../models/Leave');
 const User = require('../../models/User');
 const router = express.Router();
 
-router.get('/',(req,res)=>{
-    res.send('leave / called..')
+/* 
+   @Path: /api/leave/employee/all 
+   @token: email
+   @description: gives all pending leaves for this employee
+*/
+router.get('/employee/all/:status',auth,async (req,res)=>{
+    const {id} = req.user;
+    const user = await User.findById(id);
+    const status = req.params['status'];
+     
+    /* Fetch all leaves using employee email and status given */ 
+    const leaves = await Leave.find({
+        $and:[
+            {email: user.email},
+            {status: status}
+        ]
+    });
+     
+    res.send(leaves);
+     
 })
 
 /* 
@@ -92,27 +110,33 @@ router.post('/comment',auth,async (req,res)=>{
 router.get('/all',auth,async (req,res)=>{
     const {id} = req.user;
     const user = await User.findById(id);
-    console.log(user);
+    
     if(!(user.role === 'MANAGER')){
         return res.status(401).json({"msg": "Unauthorized"});
     }
-
-    let leaves=[];
+    let allDto=[];
     /* Fetch all employees having managerEmail as user.email */ 
     const employees = await Employee.find({managerEmail: user.email});
-
     for(let e of employees){
-        console.log(e);
         /* for each employee e, fetch all pending leaves */
         let leaveArray = await Leave.find({    //2L: harry, 2L:hermione 
             $and:[
                 {email: e.email},{status:'PENDING'}
             ]
         });
-        console.log(leaveArray);
-        leaves = [...leaves,...leaveArray]; //[2L,2L,1L]
+        for(let l of leaveArray){
+            let dto = { _id: l.id,
+                        status: l.status,
+                        name: e.name,
+                        email: e.email,
+                        leavesLeft: e.leavesLeft,
+                        from : l.from, 
+                        to: l.to,
+                        days: l.days};
+            allDto.push(dto);
+        }   
     }
-    res.send(leaves);
+    res.send(allDto);
 })
 
 module.exports = router; 

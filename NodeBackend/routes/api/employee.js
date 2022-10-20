@@ -5,9 +5,44 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const Manager = require('../../models/Manager');
+const auth = require('../../middleware/auth');
 
-router.get('/',(req,res)=>{
-    res.send('employee / called..');
+/* 
+   @Path: /api/employee/all/:managerEmail 
+   @response: all employees that work with 'managerEmail'.
+*/
+router.get('/all/',auth,async (req,res)=>{
+    const {id} = req.user;
+    const user = await User.findById(id);
+     
+    if( !(user.role === 'MANAGER')){
+        return res.status(401).json({ msg: "Unauthorized" });
+    }
+    
+    const employee = await Employee.find({managerEmail: user.email }).select('-managerEmail');
+    res.send(employee);
+});
+
+/* 
+   @Path: /api/employee/access
+   @response:  
+*/
+router.get('/access',auth,async (req,res)=>{
+    const {id} = req.user;
+     
+    const user = await User.findById(id);
+   
+    if( !(user.role === 'MANAGER')){
+        return res.status(401).json({ msg: "Unauthorized" });
+    }
+   
+    const employee = await Employee.find({
+        $and:[
+            {managerEmail: user.email},{status: '0'}
+        ]
+     }) 
+
+    res.send(employee);
 });
 
 /* 
