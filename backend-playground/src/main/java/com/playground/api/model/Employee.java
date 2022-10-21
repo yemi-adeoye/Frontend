@@ -16,7 +16,7 @@ public class Employee { //by default table name will be 'employee'
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id; 
+	private long id; 
 	
 	@Column(nullable = false)
 	private String name;
