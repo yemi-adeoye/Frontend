@@ -6,7 +6,11 @@ public class EmployeeDto {
 	private String managerEmail;
 	private String email;
 	private String password;
-
+	private Long id; 
+	private String role;
+	private int leavesLeft;
+	private int totalLeaves;
+	
 	
 	public EmployeeDto() { }
 
@@ -57,6 +61,39 @@ public class EmployeeDto {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public int getLeavesLeft() {
+		return leavesLeft;
+	}
+
+	public void setLeavesLeft(int leavesLeft) {
+		this.leavesLeft = leavesLeft;
+	}
+
+	public int getTotalLeaves() {
+		return totalLeaves;
+	}
+
+	public void setTotalLeaves(int totalLeaves) {
+		this.totalLeaves = totalLeaves;
 	}
 
 	@Override

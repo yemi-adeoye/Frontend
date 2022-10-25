@@ -18,9 +18,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		 auth.inMemoryAuthentication()
 		 .passwordEncoder(getEncoder())
-		 .withUser("harry").password(getEncoder().encode("potter")).authorities("EMPLOYEE")
+		 .withUser("harry@gmail.com").password(getEncoder().encode("potter@123")).authorities("EMPLOYEE")
 		 .and()
-		 .withUser("albus").password(getEncoder().encode("albus@123")).authorities("MANAGER");
+		 .withUser("ronald@gmail.com").password(getEncoder().encode("weasley@123")).authorities("EMPLOYEE")
+		 .and()
+		 .withUser("albus@gmail.com").password(getEncoder().encode("albus@123")).authorities("MANAGER")
+		 .and()
+		 .withUser("severus@gmail.com").password(getEncoder().encode("snape@123")).authorities("MANAGER");
 	}
 	
 	@Override

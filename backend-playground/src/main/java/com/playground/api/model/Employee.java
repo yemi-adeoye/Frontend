@@ -29,6 +29,9 @@ public class Employee { //by default table name will be 'employee'
 	@OneToOne
 	private User user; 
 	
+	@OneToOne
+	private Manager manager; 
+	
 	public Employee() {  }
 
 	public Employee(Long id, String name, String jobTitle, String imageUrl, Integer leavesLeft, Integer totalLeaves,
@@ -112,7 +115,20 @@ public class Employee { //by default table name will be 'employee'
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", jobTitle=" + jobTitle + ", imageUrl=" + imageUrl
 				+ ", leavesLeft=" + leavesLeft + ", totalLeaves=" + totalLeaves + ", createdOn=" + createdOn + "]";
+	}
+
+	public Manager getManager() {
+		return manager;
+	}
+
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}	
+	
 	
 	
 }

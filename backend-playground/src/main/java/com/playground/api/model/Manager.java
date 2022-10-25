@@ -1,5 +1,7 @@
 package com.playground.api.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +21,8 @@ public class Manager {
 	
 	@OneToOne
 	private User user;
-
+ 
+	
 	public Manager(long id, String name, String imageUrl, String jobTitle, User user) {
 		super();
 		this.id = id;
