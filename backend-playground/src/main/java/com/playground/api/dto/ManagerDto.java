@@ -1,5 +1,7 @@
 package com.playground.api.dto;
 
+import com.playground.api.model.Manager;
+
 public class ManagerDto {
 	private Long id;
 	private String name;
@@ -71,4 +73,14 @@ public class ManagerDto {
 				+ imageUrl + ", jobTitle=" + jobTitle + ", role=" + role + "]";
 	}
 
+	
+	public static ManagerDto convertToDto(Manager manager) {
+		ManagerDto dto = new ManagerDto();
+		dto.setId(manager.getId());
+		dto.setEmail(manager.getUser().getUsername());
+		dto.setName(manager.getName());
+		dto.setJobTitle(manager.getJobTitle());
+		dto.setRole(manager.getUser().getRole());
+		return dto;  
+	}
 }

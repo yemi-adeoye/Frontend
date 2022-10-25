@@ -80,26 +80,8 @@ public class EmployeeController {
 	@GetMapping("/all")
 	public List<EmployeeDto> getAllEmployeeByManagerEmail(Principal principal) {
 		String managerEmail = principal.getName();
-		List<EmployeeDto> listDto = new ArrayList<>();
-		
 		List<Employee> list = employeeRepository.getAllEmployeeByManager(managerEmail);
-		/* Iterate over the list and convert each employee object to dto  */
-		/* We add dto to listDto */
-		
-		for(Employee e : list) {
-			EmployeeDto dto = new EmployeeDto();
-			//Conversion
-			dto.setId(e.getId());
-			dto.setEmail(e.getUser().getUsername());
-			dto.setPassword("");
-			dto.setJobTitle(e.getJobTitle());
-			dto.setManagerEmail(e.getManager().getUser().getUsername());
-			dto.setRole(e.getUser().getRole());
-			dto.setLeavesLeft(e.getLeavesLeft());
-			dto.setTotalLeaves(e.getTotalLeaves());
-			dto.setName(e.getName());
-			listDto.add(dto);
-		}
+		List<EmployeeDto> listDto = EmployeeDto.convertToDto(list);
 		return listDto; 
 	}
 }

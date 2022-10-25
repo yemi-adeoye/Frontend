@@ -1,5 +1,10 @@
 package com.playground.api.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.playground.api.model.Employee;
+
 public class EmployeeDto {
 	private String name;
 	private String jobTitle;
@@ -102,5 +107,39 @@ public class EmployeeDto {
 				+ email + ", password=" + password + "]";
 	}
 
+	public static List<EmployeeDto> convertToDto(List<Employee> list) {
+		
+		List<EmployeeDto> listDto = new ArrayList<>();
+		for(Employee e : list) {
+			EmployeeDto dto = new EmployeeDto();
+			//Conversion
+			dto.setId(e.getId());
+			dto.setEmail(e.getUser().getUsername());
+			dto.setPassword("");
+			dto.setJobTitle(e.getJobTitle());
+			dto.setManagerEmail(e.getManager().getUser().getUsername());
+			dto.setRole(e.getUser().getRole());
+			dto.setLeavesLeft(e.getLeavesLeft());
+			dto.setTotalLeaves(e.getTotalLeaves());
+			dto.setName(e.getName());
+			listDto.add(dto);
+		}
+		return listDto;
+	}
+	
+	public static EmployeeDto convertToSingleDto(Employee e){
+		EmployeeDto dto = new EmployeeDto();
+		//Conversion
+		dto.setId(e.getId());
+		dto.setEmail(e.getUser().getUsername());
+		dto.setPassword("");
+		dto.setJobTitle(e.getJobTitle());
+		dto.setManagerEmail(e.getManager().getUser().getUsername());
+		dto.setRole(e.getUser().getRole());
+		dto.setLeavesLeft(e.getLeavesLeft());
+		dto.setTotalLeaves(e.getTotalLeaves());
+		dto.setName(e.getName());
+		return dto;
+	}
 	
 }
