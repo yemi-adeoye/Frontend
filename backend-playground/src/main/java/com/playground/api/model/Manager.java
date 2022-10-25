@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity 
-public class Manager {
+public class Manager {  
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

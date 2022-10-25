@@ -1,9 +1,10 @@
 package com.playground.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,9 +36,9 @@ public class EmployeeController {
 	@Autowired
 	private PasswordEncoder encoder; 
 	
-	@PostMapping("/add-record")
+	@PostMapping("/add")
 	public ResponseEntity<String> addEmployee(@RequestBody EmployeeDto dto) {
-		System.out.println("line 39 in config...");
+		 
 		/* managerEmail is valid */
 		Manager manager = managerRepository.getByEmail(dto.getManagerEmail());
 		if(manager == null)
@@ -74,8 +75,9 @@ public class EmployeeController {
 				.body("Employee Record Added");
 	}
 	
-	@GetMapping("/hello")
-	public String hello() {
-		return "hello world";
+	@GetMapping("/all")
+	public List<Employee> getAllEmployeeByManagerEmail() {
+		List<Employee> list = employeeRepository.findAll();
+		return list; 
 	}
 }

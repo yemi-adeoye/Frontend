@@ -18,23 +18,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		 auth.inMemoryAuthentication()
 		 .passwordEncoder(getEncoder())
-		 .withUser("harry").password(getEncoder().encode("potter"))
-		 .roles("EMPLOYEE");
+		 .withUser("harry").password(getEncoder().encode("potter")).authorities("EMPLOYEE")
+		 .and()
+		 .withUser("albus").password(getEncoder().encode("albus@123")).authorities("MANAGER");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println("line 21 in config...");
+	 
 		 http.authorizeRequests()
 		 	.antMatchers(HttpMethod.POST, "/api/employee/add").permitAll()
+		 	.antMatchers(HttpMethod.GET, "/api/employee/all").hasAuthority("MANAGER")
 		 	.anyRequest().permitAll()
-		 	.and().httpBasic();
+		 	.and().httpBasic()
+		 	.and().csrf().disable();
 	}
 	
 	
 	@Bean
 	public PasswordEncoder getEncoder(){
-		System.out.println("line 30 in config...");
+		 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder; 
 	}

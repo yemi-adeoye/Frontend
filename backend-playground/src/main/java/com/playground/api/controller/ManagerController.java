@@ -3,6 +3,7 @@ package com.playground.api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,9 @@ public class ManagerController {
 	@Autowired
 	private ManagerRepository managerRepository;
 	
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	@PostMapping("/add")
 	public ResponseEntity<String> addManager(@RequestBody ManagerDto dto) {
 		/* Save User */
@@ -31,6 +35,7 @@ public class ManagerController {
 		user.setPassword(dto.getPassword());
 		user.setRole(dto.getRole());
 		
+		user.setPassword(encoder.encode(dto.getPassword()));
 		user = userRepository.save(user);
 		/* Save manager*/
 		Manager manager = new Manager();

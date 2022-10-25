@@ -13,7 +13,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 }
 
 /*
- JpaRepository<I> : save() findById()  findAll()  deleteById()  saveAll() 
+ JpaRepository<T> : save() findById()  findAll()  deleteById()  saveAll() 
  
   IOC: Inversion of Control 
  */
