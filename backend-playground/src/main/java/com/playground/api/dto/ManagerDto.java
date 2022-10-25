@@ -1,5 +1,8 @@
 package com.playground.api.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.playground.api.model.Manager;
 
 public class ManagerDto {
@@ -82,5 +85,19 @@ public class ManagerDto {
 		dto.setJobTitle(manager.getJobTitle());
 		dto.setRole(manager.getUser().getRole());
 		return dto;  
+	}
+	
+	public static List<ManagerDto> convertToListDto(List<Manager> list) {
+		List<ManagerDto> listDto  = new ArrayList<>();
+		for(Manager manager :list) {
+			ManagerDto dto = new ManagerDto();
+			dto.setId(manager.getId());
+			dto.setEmail(manager.getUser().getUsername());
+			dto.setName(manager.getName());
+			dto.setJobTitle(manager.getJobTitle());
+			dto.setRole(manager.getUser().getRole());
+			listDto.add(dto);
+		}
+		return listDto;
 	}
 }

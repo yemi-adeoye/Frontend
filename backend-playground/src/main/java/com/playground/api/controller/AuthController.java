@@ -5,12 +5,14 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.playground.api.dto.EmployeeDto;
 import com.playground.api.dto.ManagerDto;
+import com.playground.api.dto.ResponseDto;
 import com.playground.api.model.Employee;
 import com.playground.api.model.Manager;
 import com.playground.api.model.User;
@@ -20,6 +22,7 @@ import com.playground.api.repositories.UserRepository;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class AuthController {
 
 	@Autowired
@@ -31,18 +34,23 @@ public class AuthController {
 	@Autowired
 	private ManagerRepository managerRepository;
 	
+	@Autowired
+	private ResponseDto responseDto;
+	
 	@GetMapping("/login")
-	public ResponseEntity<String> login(Principal principal) { //Injecting Principal Interface: DI(Dependency Injection)
+	public ResponseEntity<ResponseDto> login(Principal principal) { //Injecting Principal Interface: DI(Dependency Injection)
 		String username = principal.getName();
 		User user = userRepository.findUserByUsername(username);
+		responseDto.setMsg("Invalid Credentials");
 		if(user == null)
 			return ResponseEntity
 						.status(HttpStatus.UNAUTHORIZED)
-						.body("Invalid Credentials");
+						.body(responseDto);
 		
+		responseDto.setMsg("Login Success");
 		return ResponseEntity
 					.status(HttpStatus.OK)
-					.body("Login Success");
+					.body(responseDto);
 		
 	}
 	

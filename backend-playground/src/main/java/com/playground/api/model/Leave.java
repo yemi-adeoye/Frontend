@@ -5,10 +5,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.playground.api.enums.LeaveEnum;
 
 @Entity
 @Table(name = "leave_details")
@@ -22,7 +27,13 @@ public class Leave {
 	@Column(name = "from_date")
 	private LocalDate from;
 	private Integer days;
-
+	@Enumerated(EnumType.STRING)
+	private LeaveEnum status;  //Enumerated types: Enums  : PENDING, APPROVED, DENIED
+	@Column(length = 1000)
+	private String response; 
+	
+	@OneToOne
+	private Employee employee;
 	public Long getId() {
 		return id;
 	}
@@ -53,6 +64,37 @@ public class Leave {
 
 	public void setFrom(LocalDate from) {
 		this.from = from;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	
+	public LeaveEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(LeaveEnum status) {
+		this.status = status;
+	}
+
+	
+	public String getResponse() {
+		return response;
+	}
+
+	public void setResponse(String response) {
+		this.response = response;
+	}
+
+	@Override
+	public String toString() {
+		return "Leave [id=" + id + ", to=" + to + ", from=" + from + ", days=" + days + ", employee=" + employee + "]";
 	}
 
 	
