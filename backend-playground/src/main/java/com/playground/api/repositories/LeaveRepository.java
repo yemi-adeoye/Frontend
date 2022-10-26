@@ -6,11 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.playground.api.enums.LeaveEnum;
+import com.playground.api.enums.RecordStatus;
 import com.playground.api.model.Leave;
 
 public interface LeaveRepository extends JpaRepository<Leave, Long>{
 
-	@Query("select l from Leave l where l.employee.user.username=?1 AND l.status = ?2")
-	List<Leave> getLeavesByEmployeeUsername(String username,LeaveEnum status);
+	@Query("select l from Leave l "
+			+ " where l.employee.user.username=?1 "
+			+ " AND l.status = ?2 AND l.recordStatus=?3")
+	List<Leave> getLeavesByEmployeeUsername(String username,
+			LeaveEnum status, RecordStatus recordStatus);
 
 }

@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.playground.api.dto.ReqTicketDto;
 import com.playground.api.dto.ResponseDto;
 import com.playground.api.dto.TicketDto;
 import com.playground.api.enums.PriorityEnum;
@@ -81,5 +84,25 @@ public class TicketController {
 		List<Ticket> list =ticketRepository.getAllTicketsByUsernameAndStatus(username,statusEnum);
 		List<TicketDto> listDto = TicketDto.convertToListDto(list);
 		return listDto;
+	}
+	
+	@PutMapping("/status/update")
+	public ResponseEntity<ResponseDto> updateTicketStatus(@RequestBody ReqTicketDto dto) {
+		/* Fetch Ticket from DB by ticketID */
+		Optional<Ticket> optional = ticketRepository.findById(dto.getTicketId());
+		if(!optional.isPresent()) {
+			responseDto.setMsg("Ticket ID Invalid");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}
+		Ticket ticket = optional.get();
+		
+		/* Update the status */
+		ticket.setStatus(TicketStatus.valueOf(dto.getStatus()));
+		
+		/* Save it back */
+		ticketRepository.save(ticket);
+		responseDto.setMsg("Ticket Closed");
+		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+
 	}
 }

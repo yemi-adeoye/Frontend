@@ -2,9 +2,13 @@ package com.playground.api.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.playground.api.dto.LeaveDto;
 import com.playground.api.dto.ResponseDto;
 import com.playground.api.enums.LeaveEnum;
+import com.playground.api.enums.RecordStatus;
 import com.playground.api.model.Employee;
 import com.playground.api.model.Leave;
 import com.playground.api.repositories.EmployeeRepository;
@@ -42,6 +47,7 @@ public class LeaveController {
 		leave.setDays(leaveDto.getDays());
 		leave.setEmployee(employee);
 		leave.setStatus(LeaveEnum.PENDING);
+		leave.setRecordStatus(RecordStatus.ACTIVE);
 		leave = leaveRepository.save(leave);
 		 
 		return leave;
@@ -53,9 +59,23 @@ public class LeaveController {
 		Employee employee = employeeRepository.getByEmail(username);
 		LeaveEnum statusVal = LeaveEnum.valueOf(status);
 		List<Leave> list = 
-				leaveRepository.getLeavesByEmployeeUsername(employee.getUser().getUsername(),statusVal);
+				leaveRepository.getLeavesByEmployeeUsername(employee.getUser().getUsername(),statusVal, RecordStatus.ACTIVE);
 		List<LeaveDto> listDto = LeaveDto.convertToDto(list);
 		return listDto;
 	}
 	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<ResponseDto> deleteLeaveSoft(@PathVariable("id") Long id) {
+			Optional<Leave> optional = leaveRepository.findById(id);
+			if(!optional.isPresent()) {
+				responseDto.setMsg("Invalid Leave ID");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			}
+			Leave leave = optional.get();
+			leave.setRecordStatus(RecordStatus.DELETED);
+			leaveRepository.save(leave);
+			responseDto.setMsg("Record Archived");
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+
+	}
 }

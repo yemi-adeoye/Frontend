@@ -1,7 +1,6 @@
 package com.playground.api.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.playground.api.enums.LeaveEnum;
+import com.playground.api.enums.RecordStatus;
 
 @Entity
 @Table(name = "leave_details")
@@ -34,6 +34,10 @@ public class Leave {
 	
 	@OneToOne
 	private Employee employee;
+	
+	@Enumerated(EnumType.STRING)
+	private RecordStatus recordStatus; 
+	
 	public Long getId() {
 		return id;
 	}
@@ -90,6 +94,15 @@ public class Leave {
 
 	public void setResponse(String response) {
 		this.response = response;
+	}
+
+	
+	public RecordStatus getRecordStatus() {
+		return recordStatus;
+	}
+
+	public void setRecordStatus(RecordStatus recordStatus) {
+		this.recordStatus = recordStatus;
 	}
 
 	@Override
