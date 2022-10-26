@@ -7,8 +7,8 @@
       From: {{l.from.split("T",2)[0]}} &nbsp;&nbsp; TO: {{l.to.split("T",2)[0]}}
       &nbsp;&nbsp; Days: {{l.days}} &nbsp;&nbsp;
       Leaves Left: {{l.leavesLeft}}  <br >
-      &nbsp;&nbsp;<button (click)="onLeaveClick('APPROVED',l._id, l.email)">APPROVE</button>&nbsp;&nbsp;
-      <button (click)="onLeaveClick('DENIED',l._id, l.email)">DENY</button>
+      &nbsp;&nbsp;<button (click)="onLeaveClick('APPROVED',l.id, l.email)">APPROVE</button>&nbsp;&nbsp;
+      <button (click)="onLeaveClick('DENIED',l.id, l.email)">DENY</button>
       <br />
       <hr>
   </div>

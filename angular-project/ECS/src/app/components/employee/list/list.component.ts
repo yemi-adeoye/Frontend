@@ -22,6 +22,7 @@ export class ListComponent implements OnInit,OnDestroy {
 
   subscription: Subscription[]=[];
 
+  msg: string ='';
   constructor(private employeeService: EmployeeService) { }
 
 
@@ -44,5 +45,14 @@ export class ListComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.forEach(s=> s.unsubscribe());
+  }
+
+  onLeaveDelete(id: number){
+      this.employeeService.deleteLeave(id).subscribe({
+        next: (data) =>{
+          this.leaves = this.leaves.filter(l=>l.id !== id);
+          this.msg="Record Archived";
+        }
+      });
   }
 }

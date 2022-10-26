@@ -29,7 +29,7 @@ export class ManagerService {
     return this.http.get<Leave[]>(environment.serverUrl +'/leave/all', {headers: header})
   }
 
-  public updateLeaveStatus(token: string, leaveStatus: string, leaveID: string, eemail: String)
+  public updateLeaveStatus(token: string, leaveStatus: string, leaveID: number, eemail: String)
     : Observable<any>{
     const header = {'x-auth-token': token}
     return this.http.get(environment.serverUrl + '/leave/update-status/' + eemail + '/'+leaveID + '/'+leaveStatus, {headers: header});

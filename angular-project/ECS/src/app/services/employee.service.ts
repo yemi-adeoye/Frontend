@@ -10,7 +10,6 @@ import { environment } from 'src/environments/environment';
 })
 export class EmployeeService {
 
-
   leaveApplied$ = new BehaviorSubject<Leave>({});
   ticketCreated$ = new BehaviorSubject<Ticket>({});
 
@@ -41,7 +40,7 @@ export class EmployeeService {
       'ticketId': id,
       'status':status
      };
-     const header = {'x-auth-token' : localStorage.getItem('token')};
+     const header = {'Authorization': 'Basic ' +  localStorage.getItem('token')}
 
      return this.http.put<any>(environment.serverUrl + '/ticket/status/update', obj, {headers: header});
   }
@@ -49,4 +48,9 @@ export class EmployeeService {
   public fetchAllPriorities(): Observable<string[]> {
      return this.http.get<string[]>(environment.serverUrl + '/ticket/priority/all');
   }
+
+  public deleteLeave(id: number) : Observable<any>{
+     return this.http.delete<any>(environment.serverUrl + '/leave/delete/' + id);
+  }
+
 }

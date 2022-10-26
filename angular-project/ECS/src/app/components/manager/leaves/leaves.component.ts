@@ -18,14 +18,14 @@ export class ManagerLeavesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onLeaveClick(leaveStatus:string, leaveID:string, eemail:String){
+  onLeaveClick(leaveStatus:string, leaveID:number, eemail:String){
       this.managerService.updateLeaveStatus(localStorage.getItem('token'), leaveStatus, leaveID, eemail)
       .subscribe({
         next: (data)=>{
               if(leaveStatus === 'APPROVED'){
-                  this.leaves = this.leaves.filter(l=>l._id !== leaveID);
+                  this.leaves = this.leaves.filter(l=>l.id !== leaveID);
                   this.leaves.forEach(l=>{
-                    if(l.email === eemail && l._id === leaveID){
+                    if(l.email === eemail && l.id === leaveID){
                       l.leavesLeft = l.leavesLeft - l.days;
                       this.tempLeaves.push(l);
                     }
