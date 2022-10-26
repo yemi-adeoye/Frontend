@@ -15,12 +15,12 @@ export class ManagerService {
   constructor(private http: HttpClient) { }
 
   public getEmployeeWithoutAccess(token: string): Observable<Employee[]> {
-    const header = {'x-auth-token': token}
+    const header = {'Authorization': 'Basic ' + token}
     return this.http.get<Employee[]>(environment.serverUrl + '/employee/access', {headers: header});
   }
 
   public grantAccess(email: string, token: string) : Observable<any>{
-    const header = {'x-auth-token': token}
+   const header = {'Authorization': 'Basic ' + token}
    return this.http.get<any>(environment.serverUrl +'/user/grant-access/'+ email, {headers: header});
   }
 
