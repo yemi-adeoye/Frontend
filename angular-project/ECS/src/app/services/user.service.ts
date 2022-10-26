@@ -16,11 +16,13 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   public login(login: Login):Observable<string>{
-    return this.http.post<string>(environment.serverUrl + '/auth/login',login );
+    const token = window.btoa(login.email + ':'+ login.password);
+    const header = {'Authorization': 'Basic ' + token}
+    return this.http.get<string>(environment.serverUrl + '/auth/login',{headers: header} );
   }
 
   public getUser(token: string) : Observable<UserInfo>{
-      const header = {'x-auth-token': token}
+    const header = {'Authorization': 'Basic ' + token}
       return this.http.get<UserInfo>(environment.serverUrl + '/auth/user',{headers: header});
   }
 

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { priority } from 'src/app/data/data';
+
 import { Ticket } from 'src/app/models/ticket.model';
 import { EmployeeService } from 'src/app/services/employee.service';
 
@@ -15,7 +15,7 @@ export class TicketComponent implements OnInit,OnDestroy {
   ticketForm: FormGroup;
   msg: string = '';
   ticket: Ticket;
-  priority: string[]= priority;
+  priority: string[];
   subscription: Subscription;
   constructor(private employeeService: EmployeeService) { }
 
@@ -23,6 +23,13 @@ export class TicketComponent implements OnInit,OnDestroy {
     this.ticketForm = new FormGroup({
       issue : new FormControl('', Validators.required),
       priority: new FormControl('', Validators.required)
+    });
+
+    /* Call the API to fetch all ticket priorities */
+    this.employeeService.fetchAllPriorities().subscribe({
+      next: (data)=>{
+          this.priority = data;
+      }
     });
   }
 

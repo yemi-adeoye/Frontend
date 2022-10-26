@@ -7,10 +7,7 @@
 </div>
   <div>
       <form [formGroup]="leaveForm" (submit)="onApplyLeave()">
-        <div  >
-          <label for="exampleFormControlInput1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-        </div>
+
           <label>From Date: </label>
 
           <input type="date" name="from" formControlName="from" class="form-control">

@@ -45,9 +45,11 @@ export class LoginComponent implements OnInit,OnDestroy {
      this.subscription.push(
      this.userService.login(this.login).subscribe({
       next: (data)=>{
-          localStorage.setItem('token',data);
+           const token = window.btoa(this.login.email + ':'+ this.login.password);
+          localStorage.setItem('token',token);
           /* Update the subject(status$): true  */
           this.authService.status$.next(true);
+          console.log(data);
           this.router.navigateByUrl('/home');
         },
       error: (error)=>{
