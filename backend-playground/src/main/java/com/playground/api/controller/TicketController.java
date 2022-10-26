@@ -8,7 +8,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ import com.playground.api.repositories.TicketRepository;
 
 @RestController
 @RequestMapping("/api/ticket")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class TicketController {
 
 	@Autowired
@@ -35,7 +38,7 @@ public class TicketController {
 	private ResponseDto responseDto;
 	
 	@PostMapping("/add")
-	public ResponseEntity<ResponseDto> postTicket(@RequestBody TicketDto dto, Principal principal) {
+	public Ticket postTicket(@RequestBody TicketDto dto, Principal principal) {
 		String username = principal.getName();
 		
 		/* Assigning dto values to Ticket model */
@@ -48,21 +51,15 @@ public class TicketController {
 		/* Fetch employee by Username */
 		Employee employee = employeeRepository.getByEmail(username);
 		
-		responseDto.setMsg("Invalid Request/Data");
-		if(employee == null)
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(responseDto);
-		
 		/* Attach employee to ticket */
 		ticket.setEmployee(employee);
 		
 		/* persist ticket */
-		ticketRepository.save(ticket);
+		ticket  = ticketRepository.save(ticket);
 		
 		/* Send the response */
-		responseDto.setMsg("Ticket generated"); 
-		return ResponseEntity.status(HttpStatus.OK)
-						.body(responseDto);
+		 
+		return  ticket;
 	}
 	
 	@GetMapping("/priority/all")
@@ -73,5 +70,16 @@ public class TicketController {
 		}
 		
 		return list; 
+	}
+	
+	@GetMapping("/status/{status}")
+	public List<TicketDto> getAllTickets(Principal principal, @PathVariable("status") String status) {
+		String username =  principal.getName();
+		/* convert status string into enum*/
+		TicketStatus statusEnum = TicketStatus.valueOf(status);
+		
+		List<Ticket> list =ticketRepository.getAllTicketsByUsernameAndStatus(username,statusEnum);
+		List<TicketDto> listDto = TicketDto.convertToListDto(list);
+		return listDto;
 	}
 }

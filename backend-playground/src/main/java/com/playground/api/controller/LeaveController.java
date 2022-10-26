@@ -1,11 +1,12 @@
 package com.playground.api.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class LeaveController {
 	@Autowired
 	private ResponseDto responseDto; 
 	@PostMapping("/add")
-	public ResponseEntity<ResponseDto> addLeave(@RequestBody LeaveDto leaveDto, Principal principal) {
+	public Leave addLeave(@RequestBody LeaveDto leaveDto, Principal principal) {
 		String username = principal.getName();
 		Employee employee = employeeRepository.getByEmail(username);
 		
@@ -41,11 +42,20 @@ public class LeaveController {
 		leave.setDays(leaveDto.getDays());
 		leave.setEmployee(employee);
 		leave.setStatus(LeaveEnum.PENDING);
-		leaveRepository.save(leave);
-		responseDto.setMsg("Leave added");
-		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		leave = leaveRepository.save(leave);
+		 
+		return leave;
 	}
 	
-	
+	@GetMapping("/employee/all/{status}")
+	public List<LeaveDto> getAllLeaves(@PathVariable("status") String status, Principal principal) {
+		String username = principal.getName();
+		Employee employee = employeeRepository.getByEmail(username);
+		LeaveEnum statusVal = LeaveEnum.valueOf(status);
+		List<Leave> list = 
+				leaveRepository.getLeavesByEmployeeUsername(employee.getUser().getUsername(),statusVal);
+		List<LeaveDto> listDto = LeaveDto.convertToDto(list);
+		return listDto;
+	}
 	
 }

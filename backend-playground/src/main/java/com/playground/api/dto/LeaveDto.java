@@ -1,6 +1,10 @@
 package com.playground.api.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.playground.api.model.Leave;
 
 public class LeaveDto {
 	private Long id;
@@ -9,7 +13,8 @@ public class LeaveDto {
 	private Integer days;
 	private String status;
 	private String comments;
-
+	private int leavesLeft;
+	
 	public Long getId() {
 		return id;
 	}
@@ -58,11 +63,35 @@ public class LeaveDto {
 		this.comments = comments;
 	}
 
+	
+	public int getLeavesLeft() {
+		return leavesLeft;
+	}
+
+	public void setLeavesLeft(int leavesLeft) {
+		this.leavesLeft = leavesLeft;
+	}
+
 	@Override
 	public String toString() {
 		return "LeaveDto [id=" + id + ", from=" + from + ", to=" + to + ", days=" + days + ", status=" + status
 				+ ", comments=" + comments + "]";
 	}
 
+	public static List<LeaveDto> convertToDto(List<Leave> list) {
+		List<LeaveDto> listDto = new ArrayList<>();
+		for(Leave leave : list) {
+			LeaveDto dto = new LeaveDto();
+			dto.setId(leave.getId());
+			dto.setFrom(leave.getFrom());
+			dto.setTo(leave.getTo());
+			dto.setDays(leave.getDays());
+			dto.setStatus(leave.getStatus().toString());
+			dto.setComments(leave.getResponse());
+			dto.setLeavesLeft(leave.getEmployee().getLeavesLeft());
+			listDto.add(dto);
+		}
+		return listDto; 
+	}
 	
 }
