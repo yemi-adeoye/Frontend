@@ -111,10 +111,13 @@ public class Employee { //by default table name will be 'employee'
 		this.user = user;
 	}
 
+	 
+
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", jobTitle=" + jobTitle + ", imageUrl=" + imageUrl
-				+ ", leavesLeft=" + leavesLeft + ", totalLeaves=" + totalLeaves + ", createdOn=" + createdOn + "]";
+				+ ", leavesLeft=" + leavesLeft + ", totalLeaves=" + totalLeaves + ", createdOn=" + createdOn + ", user="
+				+ user + ", manager=" + manager + "]";
 	}
 
 	public Manager getManager() {

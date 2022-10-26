@@ -66,6 +66,10 @@ public class LeaveController {
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<ResponseDto> deleteLeaveSoft(@PathVariable("id") Long id) {
+			/*
+			 * TO Hard Delete the Record: 
+			 * leaveRepository.deleteById(id);
+			 */
 			Optional<Leave> optional = leaveRepository.findById(id);
 			if(!optional.isPresent()) {
 				responseDto.setMsg("Invalid Leave ID");
@@ -76,6 +80,6 @@ public class LeaveController {
 			leaveRepository.save(leave);
 			responseDto.setMsg("Record Archived");
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-
+			
 	}
 }

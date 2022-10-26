@@ -15,6 +15,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 	@Query("select e from Employee e where e.manager.user.username=?1")
 	List<Employee> getAllEmployeeByManager(String managerEmail);
 
+	@Query("select e from Employee e where e.manager.user.username=?1 AND e.user.enabled = ?2")
+	List<Employee> getEmployeeHavingAccess(String username, boolean isEnabled);
+
+ 
 }
 
 /*

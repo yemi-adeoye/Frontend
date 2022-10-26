@@ -71,6 +71,7 @@ public class EmployeeController {
 		user.setUsername(dto.getEmail());
 		user.setPassword(encryptedPassword);
 		user.setRole("EMPLOYEE");
+		user.setEnabled(false);
 		user = userRepository.save(user);
 		
 		employee = new Employee();
@@ -94,5 +95,13 @@ public class EmployeeController {
 		List<Employee> list = employeeRepository.getAllEmployeeByManager(managerEmail);
 		List<EmployeeDto> listDto = EmployeeDto.convertToDto(list);
 		return listDto; 
+	}
+	
+	@GetMapping("/access")
+	public List<EmployeeDto> getEmployeeHavingAccess(Principal principal) {
+		String username=principal.getName();
+		List<Employee>  list = employeeRepository.getEmployeeHavingAccess(username,false);
+		List<EmployeeDto> listDto =  EmployeeDto.convertToDto(list);
+		return listDto;
 	}
 }

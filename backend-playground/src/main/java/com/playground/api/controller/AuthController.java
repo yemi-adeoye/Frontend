@@ -47,6 +47,13 @@ public class AuthController {
 						.status(HttpStatus.UNAUTHORIZED)
 						.body(responseDto);
 		
+		if(!user.isEnabled()) {
+			responseDto.setMsg("Employee Not Activated");
+			return ResponseEntity
+					.status(HttpStatus.UNAUTHORIZED)
+					.body(responseDto);
+		}
+		
 		responseDto.setMsg("Login Success");
 		return ResponseEntity
 					.status(HttpStatus.OK)

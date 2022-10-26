@@ -39,6 +39,7 @@ public class ManagerController {
 		user.setUsername(dto.getEmail());
 		user.setPassword(dto.getPassword());
 		user.setRole(dto.getRole());
+		user.setEnabled(true);
 		
 		user.setPassword(encoder.encode(dto.getPassword()));
 		user = userRepository.save(user);
@@ -59,4 +60,6 @@ public class ManagerController {
 		List<ManagerDto>  listDto = ManagerDto.convertToListDto(list);
 		return listDto;
 	}
+	
+	
 }
