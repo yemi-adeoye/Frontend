@@ -37,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		 	.antMatchers(HttpMethod.GET, "/api/auth/login").permitAll()
 		 	.antMatchers(HttpMethod.GET, "/api/auth/user").authenticated()
 		 	.antMatchers(HttpMethod.POST, "/api/leave/add").hasAnyAuthority("EMPLOYEE","MANAGER")
+		 	.antMatchers(HttpMethod.POST, "/api/ticket/add").hasAnyAuthority("EMPLOYEE","MANAGER")
+		 	.antMatchers(HttpMethod.GET, "/api/ticket/priority/all").permitAll()
 		 	.anyRequest().permitAll()
 		 	.and().httpBasic()
 		 	.and().csrf().disable();
