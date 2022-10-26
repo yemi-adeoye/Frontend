@@ -1,6 +1,7 @@
 package com.playground.api.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,4 +83,65 @@ public class LeaveController {
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 			
 	}
+	
+	@GetMapping("/all")
+	public List<LeaveDto> fetchPendingLeavesByManagerEmail(Principal principal) {
+		String managerUsername = principal.getName();
+		
+		/* Fetch Employees by managerUsername */
+		List<Employee> list = employeeRepository.getAllEmployeeByManager(managerUsername);
+		List<Leave> finalList = new ArrayList<>();
+		/* For every employee, fetch pending leaves */
+		for(Employee e : list) {
+			List<Leave> listLeave = leaveRepository.getLeavesByEmployeeUsername(e.getUser().getUsername(), LeaveEnum.PENDING, RecordStatus.ACTIVE);
+			finalList.addAll(listLeave);
+		}
+		/* Convert it to dto */
+		List<LeaveDto> listDto = LeaveDto.convertToDto(finalList);
+		return listDto; 
+	}
+	
+	@GetMapping("/update-status/{leaveID}/{leaveStatus}")
+	public ResponseEntity<ResponseDto> updateLeaveStatus(@PathVariable("leaveID") Long leaveID, 
+								  @PathVariable("leaveStatus") String leaveStatus) {
+		
+		LeaveEnum statusVal = LeaveEnum.valueOf(leaveStatus);
+		try {
+			leaveRepository.updateStatusByid(leaveID,statusVal);
+		}
+		catch(Exception e) {
+			responseDto.setMsg("Incorrect Data Given");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}
+		
+		if(leaveStatus.equalsIgnoreCase(LeaveEnum.APPROVED.toString()) ) {
+			Optional<Leave> optional = leaveRepository.findById(leaveID);
+			if(!optional.isPresent()) {
+				responseDto.setMsg("Incorrect Data Given");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			}
+			
+			Leave leave = optional.get();
+			int days = leave.getDays();
+			
+			Employee employee = leaveRepository.getEmployeeByLeaveId(leaveID);
+			employee.setLeavesLeft(employee.getLeavesLeft() - days);
+			
+			employeeRepository.save(employee);
+		}
+		
+		responseDto.setMsg("Leave " + leaveStatus);
+		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
