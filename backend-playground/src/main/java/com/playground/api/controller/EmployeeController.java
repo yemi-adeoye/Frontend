@@ -26,8 +26,7 @@ import com.playground.api.repositories.UserRepository;
 
 @RestController
 @RequestMapping("/api/employee")
-@CrossOrigin(origins = {"http://localhost:4200"})
-public class EmployeeController {
+ public class EmployeeController {
 	
 	@Autowired
 	ManagerRepository managerRepository;

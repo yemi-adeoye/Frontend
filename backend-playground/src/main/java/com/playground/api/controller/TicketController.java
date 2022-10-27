@@ -30,8 +30,7 @@ import com.playground.api.repositories.TicketRepository;
 
 @RestController
 @RequestMapping("/api/ticket")
-@CrossOrigin(origins = {"http://localhost:4200"})
-public class TicketController {
+ public class TicketController {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;

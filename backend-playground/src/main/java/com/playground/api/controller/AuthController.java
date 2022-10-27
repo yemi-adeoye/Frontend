@@ -22,8 +22,7 @@ import com.playground.api.repositories.UserRepository;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {"http://localhost:4200"})
-public class AuthController {
+ public class AuthController {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -65,7 +64,6 @@ public class AuthController {
 	public ResponseEntity<Object> getUser(Principal principal) {
 		String username = principal.getName();
 		User user = userRepository.findUserByUsername(username);
-		System.out.println(user);
 		if(user.getRole().equalsIgnoreCase("EMPLOYEE")) {
 			//fetch employee details by username
 			Employee employee = employeeRepository.getByEmail(user.getUsername());
