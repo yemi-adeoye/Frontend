@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.playground.api.dto.LeaveDto;
+import com.playground.api.dto.ReqLeaveDto;
 import com.playground.api.dto.ResponseDto;
 import com.playground.api.enums.LeaveEnum;
 import com.playground.api.enums.RecordStatus;
@@ -131,6 +133,28 @@ public class LeaveController {
 		}
 		
 		responseDto.setMsg("Leave " + leaveStatus);
+		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+	}
+	
+	@PutMapping("/update")
+	public ResponseEntity<ResponseDto> updateReponse(@RequestBody ReqLeaveDto dto) {
+		/* Fetch leave by id given */
+		Optional<Leave>  optional = leaveRepository.findById(dto.getId());
+		
+		if(!optional.isPresent()) {
+			responseDto.setMsg("Leave ID Invalid");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}
+		
+		Leave leave = optional.get();
+		
+		/* update the response and status */
+		leave.setResponse(dto.getResponse());
+		leave.setStatus(LeaveEnum.DENIED);
+		
+		/* Save the leave back in DB */
+		leaveRepository.save(leave);
+		responseDto.setMsg("Response recorded");
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 	}
 }
