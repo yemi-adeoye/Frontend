@@ -34,7 +34,7 @@ export class ManagerService {
   }
 
   public fetchTickets(token: string) : Observable<Ticket[]>{
-    const header = {'x-auth-token': token}
+    const header = {'Authorization': 'Basic ' + token}
     return this.http.get<Ticket[]>(environment.serverUrl + '/ticket/all',{headers: header});
   }
 
