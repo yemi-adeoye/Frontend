@@ -105,4 +105,33 @@ public class TicketController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 
 	}
+	
+	@GetMapping("/all")
+	public List<Ticket> getAllTicketsByManagerAndStatus(Principal principal) {
+		String managerUsername = principal.getName();
+		
+		List<Employee> list =employeeRepository.getAllEmployeeByManager(managerUsername);
+		List<Ticket> finalList = new ArrayList<>();
+		for(Employee e : list) {
+			List<Ticket> listTickets = ticketRepository
+			.getAllTicketsByUsernameAndStatus(e.getUser().getUsername(), TicketStatus.OPEN);	
+		
+			finalList.addAll(listTickets);		
+		}
+		
+		return finalList; 
+	}
+	
+	@PutMapping("/response")
+	public ResponseEntity<ResponseDto> updateTicketResponse(@RequestBody ReqTicketDto dto) {
+		Optional<Ticket> optional = ticketRepository.findById(dto.getTicketId());
+		if(!optional.isPresent()) {
+			responseDto.setMsg("Ticket ID Invalid");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}
+		Ticket ticket = optional.get();
+		ticket.setResponse(dto.getResponse());
+		ticketRepository.save(ticket);
+		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+	}
 }
