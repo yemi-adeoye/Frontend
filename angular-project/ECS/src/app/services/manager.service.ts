@@ -10,8 +10,6 @@ import { Ticket } from '../models/ticket.model';
   providedIn: 'root'
 })
 export class ManagerService {
-
-
   constructor(private http: HttpClient) { }
 
   public getEmployeeWithoutAccess(token: string): Observable<Employee[]> {
@@ -41,7 +39,7 @@ export class ManagerService {
   }
 
   updateResponse(token: string, id: string, response: string) : Observable<any>{
-    const header = {'x-auth-token': token};
+    const header = {'Authorization': 'Basic ' + token}
     let tbody={
       ticketId: id,
       response: response
@@ -54,5 +52,14 @@ export class ManagerService {
     const header = {'Authorization': 'Basic ' + token}
     return this.http.get<Employee[]>(environment.serverUrl + '/employee/all',{headers: header});
 
+  }
+
+  public updateLeaveResponse(token: string, leaveId: number, response: string) : Observable<any>{
+    const header = {'Authorization': 'Basic ' + token}
+    let obj={
+      id: leaveId,
+      response:response
+    }
+    return this.http.put(environment.serverUrl + '/leave/update', obj,{headers: header} )
   }
 }

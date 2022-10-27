@@ -2,6 +2,7 @@
   <div class="form-header">
       <h2>Pending Leaves</h2>
   </div>
+  <div *ngIf="msg"> {{msg}}</div>
   <div *ngFor="let l of leaves">
       Emp. Name: {{l.name}} &nbsp;&nbsp;
       From: {{l.from.split("T",2)[0]}} &nbsp;&nbsp; TO: {{l.to.split("T",2)[0]}}
@@ -12,5 +13,8 @@
       <br />
       <hr>
   </div>
-  <div *ngIf="showCommentBox"><textarea placeholder="Enter reason for denial"> </textarea></div>
+  <div *ngIf="showCommentBox"><textarea placeholder="Enter reason for denial" rows="3" cols="25" [(ngModel)]="response"> </textarea>
+  <br />
+  <button (click)="onLeaveDeny()">Submit</button>
+  </div>
 </div>
