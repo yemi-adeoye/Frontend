@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit,OnDestroy {
           localStorage.setItem('token',token);
           /* Update the subject(status$): true  */
           this.authService.status$.next(true);
-          console.log(data);
+
           this.router.navigateByUrl('/home');
         },
       error: (error)=>{

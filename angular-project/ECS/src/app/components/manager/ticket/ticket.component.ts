@@ -30,8 +30,7 @@ export class ManagerTicketComponent implements OnInit {
   onSubmitResponse(id:string){
       this.managerService.updateResponse(
         localStorage.getItem('token'),
-        id,
-        this.response ).subscribe({
+        id,this.response ).subscribe({
           next: (data)=>{
             this.msg="Response Posted!!!";
           },

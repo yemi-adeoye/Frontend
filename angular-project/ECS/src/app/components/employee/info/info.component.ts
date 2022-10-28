@@ -22,7 +22,7 @@ export class InfoComponent implements OnInit {
 
   onLogout(){
     localStorage.removeItem('token');
-    console.log('logging out..')
+
     this.userService.msg$.next('Logout Successfull!!')
     this.router.navigateByUrl("/login");
   }

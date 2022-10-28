@@ -19,6 +19,7 @@ import {  ManagerAccessComponent } from './components/manager/access/access.comp
 import { ManagerLeavesComponent } from './components/manager/leaves/leaves.component';
 import { ManagerInfoComponent } from './components/manager/info/info.component';
 import { ManagerTicketComponent } from './components/manager/ticket/ticket.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
  @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,8 @@ import { ManagerTicketComponent } from './components/manager/ticket/ticket.compo
     ManagerAccessComponent,
     ManagerLeavesComponent,
     ManagerInfoComponent,
-    ManagerTicketComponent
+    ManagerTicketComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,
