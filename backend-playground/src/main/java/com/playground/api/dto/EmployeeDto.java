@@ -15,6 +15,7 @@ public class EmployeeDto {
 	private String role;
 	private int leavesLeft;
 	private int totalLeaves;
+	private String managerName;
 	
 	
 	public EmployeeDto() { }
@@ -99,6 +100,15 @@ public class EmployeeDto {
 
 	public void setTotalLeaves(int totalLeaves) {
 		this.totalLeaves = totalLeaves;
+	}
+
+	
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
 	}
 
 	@Override
