@@ -12,7 +12,7 @@
 	<div class="form-container">
 		<form (submit)="onFormSubmit()" [formGroup]="signUpForm">
 			<span class="title">Create Account</span>
-
+      <br />
 			<span> {{msg}}</span>
 			<input type="text" placeholder="Name" formControlName="name" />
       <span *ngIf="signUpForm.controls['name'].invalid && signUpForm.controls['name'].touched">
