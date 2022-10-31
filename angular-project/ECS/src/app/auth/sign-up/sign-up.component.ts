@@ -31,7 +31,7 @@ export class SignUpComponent implements OnInit,OnDestroy {
         jobTitle: new FormControl('', Validators.required),
         managerEmail: new FormControl('', Validators.required),
         email: new FormControl('', [Validators.required,Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]),
-        password: new FormControl('',[Validators.required,Validators.minLength(5),Validators.pattern(/^[a-zA-Z0-9 _#]+$/)]),
+        password: new FormControl('',[Validators.required,Validators.minLength(5),Validators.pattern(/^[a-zA-Z0-9 @_#]+$/)]),
         repassword: new FormControl('',Validators.required)
     });
   }

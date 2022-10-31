@@ -40,8 +40,6 @@ export class AdminDashboardComponent   {
         }
         //Pusd headinf to array variable
         this.lines.push(tarr);
-
-
         // Table Rows
         let tarrR = [];
 

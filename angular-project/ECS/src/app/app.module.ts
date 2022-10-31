@@ -20,6 +20,16 @@ import { ManagerLeavesComponent } from './components/manager/leaves/leaves.compo
 import { ManagerInfoComponent } from './components/manager/info/info.component';
 import { ManagerTicketComponent } from './components/manager/ticket/ticket.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatRippleModule} from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSelectModule} from '@angular/material/select';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { EdashboardComponent } from './components/employee/edashboard/edashboard.component';
+import { EprofileComponent } from './components/employee/eprofile/eprofile.component';
  @NgModule({
   declarations: [
     AppComponent,
@@ -37,14 +47,24 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
     ManagerLeavesComponent,
     ManagerInfoComponent,
     ManagerTicketComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    SidebarComponent,
+    NavbarComponent,
+    EdashboardComponent,
+    EprofileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule,
+    MatRippleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTooltipModule,
    ],
   providers: [],
   bootstrap: [AppComponent]
