@@ -13,6 +13,7 @@ public class TicketDto {
 	private LocalDate generatedDate; 
 	private String Status;
 	private String response;
+	private String name;
 	
 	public String getIssue() {
 		return issue;
@@ -62,6 +63,14 @@ public class TicketDto {
 		this.response = response;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public static List<TicketDto> convertToListDto(List<Ticket> list) {
 		List<TicketDto> listDto = new ArrayList<>();
 		for(Ticket t : list) {
@@ -72,6 +81,7 @@ public class TicketDto {
 			dto.setResponse(t.getResponse());
 			dto.setStatus(t.getStatus().toString());
 			dto.setGeneratedDate(t.getGenaratedDate());
+			dto.setName(t.getEmployee().getName());
 			listDto.add(dto);
 		}
 		return listDto;

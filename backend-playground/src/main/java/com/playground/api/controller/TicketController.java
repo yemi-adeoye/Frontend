@@ -106,7 +106,7 @@ import com.playground.api.repositories.TicketRepository;
 	}
 	
 	@GetMapping("/all")
-	public List<Ticket> getAllTicketsByManagerAndStatus(Principal principal) {
+	public List<TicketDto> getAllTicketsByManagerAndStatus(Principal principal) {
 		String managerUsername = principal.getName();
 		
 		List<Employee> list =employeeRepository.getAllEmployeeByManager(managerUsername);
@@ -117,8 +117,8 @@ import com.playground.api.repositories.TicketRepository;
 		
 			finalList.addAll(listTickets);		
 		}
-		
-		return finalList; 
+		List<TicketDto> listDto = TicketDto.convertToListDto(finalList);
+		return listDto; 
 	}
 	
 	@PutMapping("/response")
