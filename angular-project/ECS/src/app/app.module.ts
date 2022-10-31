@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -30,7 +30,14 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EdashboardComponent } from './components/employee/edashboard/edashboard.component';
 import { EprofileComponent } from './components/employee/eprofile/eprofile.component';
- @NgModule({
+import { EticketComponent } from './components/employee/eticket/eticket.component';
+import { EleaveComponent } from './components/employee/eleave/eleave.component';
+import { EticketListComponent } from './components/employee/eticket-list/eticket-list.component';
+import { EleaveListComponent } from './components/employee/eleave-list/eleave-list.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+@NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
@@ -51,10 +58,15 @@ import { EprofileComponent } from './components/employee/eprofile/eprofile.compo
     SidebarComponent,
     NavbarComponent,
     EdashboardComponent,
-    EprofileComponent
+    EprofileComponent,
+    EticketComponent,
+    EleaveComponent,
+    EticketListComponent,
+    EleaveListComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
@@ -65,6 +77,8 @@ import { EprofileComponent } from './components/employee/eprofile/eprofile.compo
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule
    ],
   providers: [],
   bootstrap: [AppComponent]
