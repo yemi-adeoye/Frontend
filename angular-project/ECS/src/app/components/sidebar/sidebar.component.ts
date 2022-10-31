@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserInfo } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 declare const $: any;
 declare interface RouteInfo {
     path: string;
@@ -14,6 +17,15 @@ export const ROUTES: RouteInfo[] = [
     { path: '/employee/ticket-list', title: 'Ticket Records',  icon:'content_paste', class: '' },
      { path: '/logout', title: 'Logout',  icon:'unarchive', class: 'active-pro' },
 ];
+
+export const ROUTES1: RouteInfo[] = [
+  { path: '/manager', title: 'Manager Dashboard',  icon:'person', class: '' },
+  { path: '/manager/access', title: 'Access Grants',  icon:'bubble_chart', class: '' },
+  { path: '/manager/ticket', title: 'All Tickets',  icon:'content_paste', class: '' },
+ { path: '/manager/leave', title: 'All Pending Leaves',  icon:'library_books', class: '' },
+   { path: '/logout', title: 'Logout',  icon:'unarchive', class: 'active-pro' },
+];
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -21,12 +33,28 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
 
+  user: UserInfo;
   menuItems: any[];
 
-  constructor() { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.userService.getUser(localStorage.getItem('token')).subscribe({
+      next: (data)=>{
+        this.user = data;
+        if(this.user.role === 'EMPLOYEE'){
+          this.menuItems = ROUTES.filter(menuItem => menuItem);
+        }
+         else
+         this.menuItems = ROUTES1.filter(menuItem => menuItem);
+      },
+      error: (error)=>{
+          this.userService.msg$.next(error.error.msg);
+          this.router.navigateByUrl('/login');
+      }
+    });
+
+
   }
   isMobileMenu() {
       if ($(window).width() > 991) {

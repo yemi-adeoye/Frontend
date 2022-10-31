@@ -11,7 +11,13 @@ import { EprofileComponent } from './components/employee/eprofile/eprofile.compo
 import { EticketListComponent } from './components/employee/eticket-list/eticket-list.component';
 import { EticketComponent } from './components/employee/eticket/eticket.component';
 import { HomeComponent } from './components/home/home.component';
+import { MaccessComponent } from './components/manager/maccess/maccess.component';
 import { ManagerComponent } from './components/manager/manager.component';
+import { MdashboardComponent } from './components/manager/mdashboard/mdashboard.component';
+import { MleavesComponent } from './components/manager/mleaves/mleaves.component';
+import { MlistComponent } from './components/manager/mlist/mlist.component';
+import { MprofileComponent } from './components/manager/mprofile/mprofile.component';
+import { MticketComponent } from './components/manager/mticket/mticket.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
@@ -30,7 +36,15 @@ const routes: Routes = [
     {path: 'leave-list', component: EleaveListComponent},
   ]},
   //{path: 'employee',component: EmployeeComponent, canActivate: [AuthGuardService]},
-  {path:'manager', component: ManagerComponent, canActivate: [AuthGuardService]},
+  //{path:'manager', component: ManagerComponent, canActivate: [AuthGuardService]},
+  {path:'manager', component: MdashboardComponent, canActivate: [AuthGuardService],
+  children:[
+    {path: '', component: MlistComponent},
+    {path: 'ticket', component: MticketComponent},
+    {path: 'leave', component: MleavesComponent},
+    {path: 'access', component: MaccessComponent}
+
+  ]},
   {path:'**', component: PageNotFoundComponent},
 ];
 

@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit,OnDestroy {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
      };
+     //check for admin user/pass, then navigate to admincomponent
 
      /* Call login API */
      this.subscription.push(

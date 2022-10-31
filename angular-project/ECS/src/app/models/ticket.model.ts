@@ -6,4 +6,5 @@ export class Ticket{
   generatedDate?:string;
   status? : string;
   response?:string;
+  name?: string;
 }

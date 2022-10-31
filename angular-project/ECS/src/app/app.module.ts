@@ -36,6 +36,13 @@ import { EticketListComponent } from './components/employee/eticket-list/eticket
 import { EleaveListComponent } from './components/employee/eleave-list/eleave-list.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MprofileComponent } from './components/manager/mprofile/mprofile.component';
+import { MaccessComponent } from './components/manager/maccess/maccess.component';
+import { MleavesComponent } from './components/manager/mleaves/mleaves.component';
+import { MticketComponent } from './components/manager/mticket/mticket.component';
+import { MdashboardComponent } from './components/manager/mdashboard/mdashboard.component';
+import { MlistComponent } from './components/manager/mlist/mlist.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -62,7 +69,14 @@ import { MatNativeDateModule } from '@angular/material/core';
     EticketComponent,
     EleaveComponent,
     EticketListComponent,
-    EleaveListComponent
+    EleaveListComponent,
+    MprofileComponent,
+    MaccessComponent,
+    MleavesComponent,
+    MticketComponent,
+    MdashboardComponent,
+    MlistComponent
+
   ],
   imports: [
     BrowserModule,
@@ -78,7 +92,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatTooltipModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCardModule
    ],
   providers: [],
   bootstrap: [AppComponent]
