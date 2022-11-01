@@ -1,24 +1,32 @@
 package com.playground.api.controller;
 
 import java.security.Principal;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.playground.api.dto.EmailRequestDto;
 import com.playground.api.dto.EmployeeDto;
 import com.playground.api.dto.ManagerDto;
 import com.playground.api.dto.ResponseDto;
 import com.playground.api.model.Employee;
 import com.playground.api.model.Manager;
+import com.playground.api.model.PasswordResets;
 import com.playground.api.model.User;
 import com.playground.api.repositories.EmployeeRepository;
 import com.playground.api.repositories.ManagerRepository;
+import com.playground.api.repositories.PasswordResetsRepository;
 import com.playground.api.repositories.UserRepository;
+import com.playground.api.service.MailService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -36,6 +44,14 @@ import com.playground.api.repositories.UserRepository;
 	@Autowired
 	private ResponseDto responseDto;
 	
+	@Autowired
+	private PasswordResetsRepository passwordResetsRepository;
+	
+	@Autowired
+	private PasswordEncoder encoder; 
+	
+	@Autowired
+	private MailService mailService;
 	@GetMapping("/login")
 	public ResponseEntity<ResponseDto> login(Principal principal) { //Injecting Principal Interface: DI(Dependency Injection)
 		String username = principal.getName();
@@ -82,4 +98,87 @@ import com.playground.api.repositories.UserRepository;
 					.body(dto);
 		}
 	}
+	 
+	@PostMapping("/forgot-password")
+	public ResponseEntity<Object> sendPasswordReset(@RequestBody EmailRequestDto emailRequestDto) {
+
+		String email = emailRequestDto.getEmail();
+
+		User user = userRepository.findUserByUsername(email);
+
+		if (user == null) {
+			// this user does not exist: send developer response
+			responseDto.setMsg("Email Not Registered, please sign up");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}
+
+		String ota = generateUserOneTimeAccessKey();
+
+		// create an entry for the user in the database
+		PasswordResets userPasswordReset = new PasswordResets();
+
+		userPasswordReset.setUser(user);
+		userPasswordReset.setRand(ota);
+
+		try {
+			passwordResetsRepository.save(userPasswordReset);
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		// send the user an email
+		String body = "Copy the following link into your browser to reset your password: "
+				+ "http://localhost:4200/reset-password/" + ota + "/" + email;
+
+		try{
+			mailService.sendMessage("no.reply.northstar.testing@gmail.com", email, "Password Reset", body);
+		}catch(Exception e) {
+			responseDto.setMsg("Could not send email due to server Issue");
+			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(responseDto);
+		}
+		responseDto.setMsg("Success");
+		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+	}
+	
+	private String generateUserOneTimeAccessKey() {
+		Random random = new Random();
+
+		Integer oneInt = random.hashCode();
+
+ 
+		return oneInt.toString();
+	}
+	@GetMapping("/confirm-ota/{ota}/{email}")
+	public ResponseEntity<ResponseDto> confirmOta(@PathVariable("ota") String ota, 
+						   @PathVariable("email") String email) {
+		PasswordResets reset = passwordResetsRepository.getByOtaAndEmail(ota,email); 
+		if(reset == null) {
+			responseDto.setMsg("Email verification Failed.");
+			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(responseDto);
+		}
+		
+		responseDto.setMsg("Success");
+		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+	}
+	@PostMapping("/reset-pass")
+	public ResponseEntity<ResponseDto> resetPass(@RequestBody User user) {
+		
+ 		User userDB = userRepository.findUserByUsername(user.getUsername());
+		if(userDB == null) {
+			responseDto.setMsg("Reset Failed");
+			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(responseDto);
+		}
+		userDB.setPassword(encoder.encode(user.getPassword()));
+		userRepository.save(userDB);
+		
+		responseDto.setMsg("Success");
+		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+	}
 }
+
+
+
+
+
+
+

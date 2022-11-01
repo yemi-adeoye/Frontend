@@ -14,6 +14,7 @@ public class LeaveDto {
 	private String status;
 	private String comments;
 	private int leavesLeft;
+	private String name; 
 	
 	public Long getId() {
 		return id;
@@ -71,6 +72,14 @@ public class LeaveDto {
 	public void setLeavesLeft(int leavesLeft) {
 		this.leavesLeft = leavesLeft;
 	}
+    
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public String toString() {
@@ -89,6 +98,7 @@ public class LeaveDto {
 			dto.setStatus(leave.getStatus().toString());
 			dto.setComments(leave.getResponse());
 			dto.setLeavesLeft(leave.getEmployee().getLeavesLeft());
+			dto.setName(leave.getEmployee().getName());
 			listDto.add(dto);
 		}
 		return listDto; 
