@@ -9,7 +9,7 @@
       </span>
       <input type="email" placeholder="Enter Email" name="email" formControlName="email">
       <input type="password" placeholder="Enter Password" name="password" formControlName="password">
-			<a href="#">Forgot your password?</a>
+			<a routerLink="/forgot-password">Forgot your password?</a>
 			<input type="submit"  class="login_button" value="Login" [disabled]="!loginForm.valid">
 		</form>
 	</div>

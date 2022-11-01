@@ -8,4 +8,5 @@ export class UserInfo{
   role: string;
   leavesLeft? : number;
   totalLeaves? : number;
+  managerEmail?: string;
 }

@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class EticketListComponent implements OnInit {
 
   tickets: Ticket[]=[];
-
+  msg: string;
   constructor(private userService: UserService,private router: Router,
     private employeeService: EmployeeService) { }
 
@@ -26,4 +26,15 @@ export class EticketListComponent implements OnInit {
     })
   }
 
+  onStatusUpdate($event: any){
+    let id = $event;
+
+    this.employeeService.updateTicketStatus(id,'CLOSED').subscribe({
+      next: (data)=>{
+          this.tickets = this.tickets.filter(t=> t.id !== id);
+          this.msg='Ticket Closed';
+      },
+      error: (error)=>{}
+    });
+}
 }

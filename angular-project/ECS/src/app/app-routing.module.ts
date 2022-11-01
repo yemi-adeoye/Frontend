@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { LoginComponent } from './auth/login/login.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { EdashboardComponent } from './components/employee/edashboard/edashboard.component';
@@ -11,6 +13,7 @@ import { EprofileComponent } from './components/employee/eprofile/eprofile.compo
 import { EticketListComponent } from './components/employee/eticket-list/eticket-list.component';
 import { EticketComponent } from './components/employee/eticket/eticket.component';
 import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
 import { MaccessComponent } from './components/manager/maccess/maccess.component';
 import { ManagerComponent } from './components/manager/manager.component';
 import { MdashboardComponent } from './components/manager/mdashboard/mdashboard.component';
@@ -45,6 +48,9 @@ const routes: Routes = [
     {path: 'access', component: MaccessComponent}
 
   ]},
+  {path:'logout', component: LogoutComponent},
+  {path:'forgot-password', component: ForgotPasswordComponent},
+  {path:'reset-password/:ota/:email', component: ResetPasswordComponent},
   {path:'**', component: PageNotFoundComponent},
 ];
 

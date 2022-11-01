@@ -34,5 +34,20 @@ export class UserService {
     return this.http.get<Manager[]>(environment.serverUrl +'/manager/all');
   }
 
+  public sendVerificationLink(email: string): Observable<any> {
+    return this.http.post(environment.serverUrl + '/auth/forgot-password', {'email': email});
+  }
+
+  public confirmOta(ota: string, email: string) : Observable<any>{
+    return this.http.get(environment.serverUrl + '/auth/confirm-ota/' +ota + '/' + email);
+  }
+
+  resetPassword(password: string, email: string): Observable<any> {
+    let user={
+      username: email,
+      password: password
+    };
+     return this.http.post(environment.serverUrl + '/auth/reset-pass', user);
+  }
 
 }

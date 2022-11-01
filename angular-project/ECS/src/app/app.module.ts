@@ -43,6 +43,9 @@ import { MticketComponent } from './components/manager/mticket/mticket.component
 import { MdashboardComponent } from './components/manager/mdashboard/mdashboard.component';
 import { MlistComponent } from './components/manager/mlist/mlist.component';
 import {MatCardModule} from '@angular/material/card';
+import { LogoutComponent } from './components/logout/logout.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +78,10 @@ import {MatCardModule} from '@angular/material/card';
     MleavesComponent,
     MticketComponent,
     MdashboardComponent,
-    MlistComponent
+    MlistComponent,
+    LogoutComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
 
   ],
   imports: [

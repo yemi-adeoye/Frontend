@@ -8,6 +8,7 @@ import { UserService } from './user.service';
 })
 export class AuthService {
 
+
   status$ = new BehaviorSubject<boolean>(false);
 
   constructor(private userService: UserService, private router: Router) { }
@@ -29,4 +30,6 @@ export class AuthService {
 
     return status;
   }
+
+
 }

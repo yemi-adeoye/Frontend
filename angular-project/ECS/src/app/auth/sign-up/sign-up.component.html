@@ -36,7 +36,7 @@
 			<input type="email" placeholder="Email" formControlName="email" formControlName="email" />
 			<span *ngIf="signUpForm.controls['email'].invalid && signUpForm.controls['email'].touched">
         <span *ngIf="signUpForm.controls['email'].errors['required']">Email is required</span>
-        <span *ngIf="signUpForm.controls['email'].errors['pattern']">please enter correct email format</span>
+        <span *ngIf="signUpForm.controls['email'].errors['pattern']">Enter valid email. Only incedo and gmail IDs are allowed</span>
       </span>
 
       <input type="password" placeholder="Password" formControlName="password"/>

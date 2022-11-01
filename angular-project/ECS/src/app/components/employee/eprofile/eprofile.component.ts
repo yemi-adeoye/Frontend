@@ -26,6 +26,7 @@ export class EprofileComponent implements OnInit {
             jobTitle: data.jobTitle,
             imageUrl: data.imageUrl,
             managerName: data.managerName,
+            managerEmail: data.managerEmail,
             role: data.role,
             leavesLeft: data.leavesLeft,
             totalLeaves: data.totalLeaves
