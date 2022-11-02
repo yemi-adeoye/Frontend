@@ -62,4 +62,9 @@ export class ManagerService {
     }
     return this.http.put(environment.serverUrl + '/leave/update', obj,{headers: header} )
   }
+
+  public sendEmployeeBatch(token: string, employees:Employee[]) :Observable<any>{
+    const header = {'Authorization': 'Basic ' + token}
+    return this.http.post(environment.serverUrl + '/admin/employee/post', employees, {headers: header})
+  }
 }

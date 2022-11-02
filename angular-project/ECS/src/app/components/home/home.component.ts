@@ -19,8 +19,12 @@ export class HomeComponent implements OnInit {
         if(this.user.role === 'EMPLOYEE'){
               this.router.navigateByUrl('/employee');
         }
-         else
-              this.router.navigateByUrl('/manager');
+        else if (this.user.role == 'ADMIN'){
+            this.router.navigateByUrl('/admin');
+        }else{
+            this.router.navigateByUrl('/manager');
+        }
+
       },
       error: (error)=>{
           this.userService.msg$.next(error.error.msg);

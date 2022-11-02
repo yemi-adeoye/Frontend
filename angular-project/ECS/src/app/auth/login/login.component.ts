@@ -41,6 +41,10 @@ export class LoginComponent implements OnInit,OnDestroy {
       password: this.loginForm.value.password
      };
      //check for admin user/pass, then navigate to admincomponent
+     //if (this.login.email == "admin" && this.login.password == "admin@123"){
+      //this.router.navigateByUrl('/admin');
+      //return
+     //}
 
      /* Call login API */
      this.subscription.push(
